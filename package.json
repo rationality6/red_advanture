@@ -1,7 +1,7 @@
 {
-  "name": "phaser3-rollup-typescript",
-  "version": "1.1.1",
-  "description": "Phaser 3 TypeScript Starter",
+  "name": "red_advanture",
+  "version": "0.1",
+  "description": "platformer game",
   "main": "dist/index.js",
   "scripts": {
     "dev": "vite",
@@ -13,12 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/geocine/phaser3-rollup-typescript.git"
   },
-  "author": "Aivan Monceller, Hyun Ahn",
+  "author": "Hyun Ahn",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/geocine/phaser3-rollup-typescript/issues"
-  },
-  "homepage": "https://github.com/geocine/phaser3-rollup-typescript#readme",
+  "homepage": "https://github.com/rationality6/red_advanture",
   "devDependencies": {
     "@types/node": "^17.0.31",
     "@rollup/plugin-alias": "^3.1.9",
