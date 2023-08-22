@@ -1,5 +1,9 @@
+import initAnimations from "./playerAnims";
+
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
+  private gravity: number = 500;
+  private jumpCount: number = 0;
 
   constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
@@ -9,15 +13,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.init();
     // this.setInput();
+    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
 
-  init() {
-    debugger
-    this.gravity = 500;
+  init(): void {
     this.body.setGravityY(this.gravity);
     this.setCollideWorldBounds(true);
 
     this.cursors = this.scene.input.keyboard.createCursorKeys();
+
+    initAnimations(this.scene.anims);
   }
 
   setInput() {
@@ -52,7 +57,37 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-500);
     });
   }
-  preUpdate() {}
+
+  update() {
+    const { left, right, space, up } = this.cursors;
+    const onFloor = this.body.onFloor();
+    const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
+    const isUpJustDown = Phaser.Input.Keyboard.JustDown(up);
+
+    if (left.isDown) {
+      this.setVelocityX(-300);
+      this.setFlipX(true);
+    } else if (right.isDown) {
+      this.setVelocityX(300);
+      this.setFlipX(false);
+    } else {
+      this.setVelocityX(0);
+    }
+
+    if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
+      this.setVelocityY(-400);
+      this.jumpCount += 1;
+      console.log(this.jumpCount);
+    }
+
+    if (onFloor) {
+      this.jumpCount = 0;
+    }
+
+    this.body.velocity.x !== 0
+      ? this.play("run", true)
+      : this.play("idle", true);
+  }
 }
 
 export default Player;
