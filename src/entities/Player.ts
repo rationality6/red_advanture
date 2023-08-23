@@ -1,4 +1,5 @@
 import initAnimations from "./playerAnims";
+import collidable from "../mixins/collidable";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
@@ -10,6 +11,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
+
+    // mixins
+    Object.assign(this, collidable);
 
     this.init();
     // this.setInput();
@@ -77,16 +81,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
       this.setVelocityY(-400);
       this.jumpCount += 1;
-      console.log(this.jumpCount);
     }
 
     if (onFloor) {
       this.jumpCount = 0;
     }
 
-    this.body.velocity.x !== 0
-      ? this.play("run", true)
-      : this.play("idle", true);
+    onFloor
+      ? this.body.velocity.x !== 0
+        ? this.play("run", true)
+        : this.play("idle", true)
+      : this.play("jump", true);
   }
 }
 

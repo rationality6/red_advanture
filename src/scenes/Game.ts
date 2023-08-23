@@ -39,6 +39,16 @@ export default class GameScene extends Phaser.Scene {
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
-    this.physics.add.collider(player, this.colliderLayer);
+    player.addCollider(this.colliderLayer);
+
+    // this.createPlayerColliders(player, mapFieldLayer);
+
+    this.setupFollowupCameraOn(player)
+
+  }
+
+  setupFollowupCameraOn(player){
+    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(2)
+    this.cameras.main.startFollow(player);
   }
 }
