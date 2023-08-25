@@ -17,7 +17,7 @@ export default class GameScene extends Phaser.Scene {
 
     // this.load.image("player", "assets/player/movements/idle01.png");
 
-    this.load.spritesheet("player", "assets/player/move_sprite_1.png",{
+    this.load.spritesheet("player", "assets/player/move_sprite_1.png", {
       frameWidth: 32,
       frameHeight: 32,
       spacing: 32,
@@ -35,7 +35,10 @@ export default class GameScene extends Phaser.Scene {
     map.createLayer("trees", tileset1!, 0, 0);
     map.createLayer("leafs", tileset1!, 0, 0);
 
-    const player = new Player(this, 100, 250, "player")
+    const zones = this.getPlayerZones(map);
+
+    const player = new Player(this, zones.start.x, zones.start.y, "player");
+    this.createEndOfLevel(zones.end);
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
@@ -43,12 +46,23 @@ export default class GameScene extends Phaser.Scene {
 
     // this.createPlayerColliders(player, mapFieldLayer);
 
-    this.setupFollowupCameraOn(player)
-
+    this.setupFollowupCameraOn(player);
   }
 
-  setupFollowupCameraOn(player){
-    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(2)
+  setupFollowupCameraOn(player) {
+    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(2);
     this.cameras.main.startFollow(player);
+  }
+
+  getPlayerZones(map: any) {
+    const playerZones = map.getObjectLayer("zones").objects;
+    return {
+      start: playerZones.find((zone) => zone.name === "startZone"),
+      end: playerZones.find((zone) => zone.name === "endZone"),
+    };
+  }
+
+  createEndOfLevel(end) {
+    this.physics.add.sprite(end.x, end.y, "end").setSize(5, 200);
   }
 }
