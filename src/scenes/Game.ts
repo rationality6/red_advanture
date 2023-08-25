@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
     const zones = this.getPlayerZones(map);
 
     const player = new Player(this, zones.start.x, zones.start.y, "player");
-    this.createEndOfLevel(zones.end);
+    this.createEndOfLevel(player, zones.end);
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
@@ -62,7 +62,11 @@ export default class GameScene extends Phaser.Scene {
     };
   }
 
-  createEndOfLevel(end) {
-    this.physics.add.sprite(end.x, end.y, "end").setSize(5, 200);
+  createEndOfLevel(player, end) {
+    const endOfSprite = this.physics.add.sprite(end.x, end.y, "end").setSize(5, 200);
+
+    this.physics.add.overlap(player,endOfSprite, () => {
+      this.scene.start("EndScene");
+    })
   }
 }
