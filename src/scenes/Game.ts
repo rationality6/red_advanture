@@ -17,6 +17,11 @@ export default class GameScene extends Phaser.Scene {
 
     // this.load.image("player", "assets/player/movements/idle01.png");
 
+    this.load.spritesheet("catLaying", "assets/cat_laying.png",{
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     this.load.spritesheet("player", "assets/player/move_sprite_1.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -47,6 +52,18 @@ export default class GameScene extends Phaser.Scene {
     // this.createPlayerColliders(player, mapFieldLayer);
 
     this.setupFollowupCameraOn(player);
+
+    this.anims.create({
+      key: "catLaying",
+      frames: this.anims.generateFrameNumbers("catLaying", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.add.sprite(250, 356, "catLaying").setScale(1).play("catLaying");
   }
 
   setupFollowupCameraOn(player) {
