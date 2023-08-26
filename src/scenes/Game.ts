@@ -12,12 +12,12 @@ export default class GameScene extends Phaser.Scene {
     this.load.image("logo", "assets/phaser3-logo.png");
 
     this.load.tilemapTiledJSON("map", "assets/json_exporta.tmj");
+    this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
+
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
-    // this.load.image('tiles-2', 'assets/main_lev_build_2.png');
+    this.load.image("tiles-2", "assets/main_lev_build_2.png");
 
-    // this.load.image("player", "assets/player/movements/idle01.png");
-
-    this.load.spritesheet("catLaying", "assets/cat_laying.png",{
+    this.load.spritesheet("catLaying", "assets/cat_laying.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -32,7 +32,7 @@ export default class GameScene extends Phaser.Scene {
   create() {
     const map = this.make.tilemap({ key: "map" });
     const tileset1 = map.addTilesetImage("main_lev_build_1", "tiles-1");
-    // const tileset2 = map.addTilesetImage('main_lev_build_2', 'tiles-2');
+    // const tileset2 = map.addTilesetImage("main_lev_build_2", "tiles-2");
 
     this.colliderLayer = map.createLayer("collidersLayer", tileset1!, 0, 0);
     map.createLayer("moss", tileset1!, 0, 0);
@@ -48,8 +48,6 @@ export default class GameScene extends Phaser.Scene {
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
     player.addCollider(this.colliderLayer);
-
-    // this.createPlayerColliders(player, mapFieldLayer);
 
     this.setupFollowupCameraOn(player);
 
@@ -80,10 +78,12 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createEndOfLevel(player, end) {
-    const endOfSprite = this.physics.add.sprite(end.x, end.y, "end").setSize(5, 200);
+    const endOfSprite = this.physics.add
+      .sprite(end.x, end.y, "end")
+      .setSize(5, 200);
 
-    this.physics.add.overlap(player,endOfSprite, () => {
+    this.physics.add.overlap(player, endOfSprite, () => {
       this.scene.start("EndScene");
-    })
+    });
   }
 }
