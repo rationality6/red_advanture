@@ -13,8 +13,8 @@ export default class EndScene extends Phaser.Scene {
     // const tileset1 = map.addTilesetImage("tile_set", "tiles-1");
     const tileset2 = map.addTilesetImage("tile_set", "tiles-2");
 
-    this.colliderLayer = map.createLayer("colliderLayer", tileset2, 0, 0);
     map.createLayer("fieldLayer", tileset2!, 0, 0);
+    this.colliderLayer = map.createLayer("colliderLayer", tileset2, 0, 0);
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 

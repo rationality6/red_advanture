@@ -5,8 +5,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
   private gravity: number = 500;
   private jumpCount: number = 0;
-
-  constructor(scene: any, x: number, y: number, key: string) {
+  
+  private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
 
     scene.add.existing(this);
@@ -78,10 +78,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
     }
 
-    if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
-      this.setVelocityY(-400);
-      this.jumpCount += 1;
-    }
+    this.jumpCheck(isSpaceJustDown, isUpJustDown, onFloor)
 
     if (onFloor) {
       this.jumpCount = 0;
@@ -93,6 +90,14 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         : this.play("idle", true)
       : this.play("jump", true);
   }
+
+  jumpCheck(isSpaceJustDown, isUpJustDown, onFloor){
+    if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
+      this.setVelocityY(-400);
+      this.jumpCount += 1;
+    }
+  }
+
 }
 
 export default Player;

@@ -3,6 +3,7 @@ import Player from "../entities/Player";
 
 export default class GameScene extends Phaser.Scene {
   colliderLayer: any;
+  private bgStarted = false;
 
   constructor() {
     super("GameScene");
@@ -29,7 +30,23 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
+  playSong() {
+    if (this.bgStarted === false) {
+      this.bgStarted = true;
+      let bgSound = new Audio("./assets/sounds/super_shy.mp3");
+      bgSound.loop = true;
+      bgSound.play();
+    }
+  }
+
   create() {
+    const spaceBar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
+    spaceBar.on("down", () => {
+      this.playSong()
+    });
+
     const map = this.make.tilemap({ key: "map" });
     const tileset1 = map.addTilesetImage("main_lev_build_1", "tiles-1");
     // const tileset2 = map.addTilesetImage("main_lev_build_2", "tiles-2");
@@ -42,6 +59,7 @@ export default class GameScene extends Phaser.Scene {
 
     const zones = this.getPlayerZones(map);
 
+    // const player = new Player(this, zones.start.x, zones.start.y, "player");
     const player = new Player(this, zones.start.x, zones.start.y, "player");
     this.createEndOfLevel(player, zones.end);
 
