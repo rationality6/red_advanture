@@ -10,8 +10,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("logo", "assets/phaser3-logo.png");
-
     this.load.tilemapTiledJSON("map", "assets/json_exporta.tmj");
     this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
 
