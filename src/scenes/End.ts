@@ -47,6 +47,7 @@ export default class EndScene extends Phaser.Scene {
 
     this.physics.add.overlap(player, endOfSprite, () => {
       console.log("end");
+      this.add.image(400, 300, "logo");
     });
   }
 }

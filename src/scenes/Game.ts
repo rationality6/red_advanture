@@ -61,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
       repeat: -1,
     });
 
-    this.add.sprite(250, 356, "catLaying").setScale(1).play("catLaying");
+    this.add.sprite(270, 365, "catLaying").setScale(1).play("catLaying");
 
     const birdman = new BirdMan(this, 100, 100);
   }
