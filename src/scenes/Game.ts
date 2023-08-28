@@ -43,6 +43,8 @@ export default class GameScene extends Phaser.Scene {
     const player = new Player(this, zones.start.x, zones.start.y, "player");
     this.createEndOfLevel(player, zones.end);
 
+    const enemy = new BirdMan(this, 100, 100);
+
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
     player.addCollider(this.colliderLayer);

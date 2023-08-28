@@ -1,10 +1,21 @@
 class Preload extends Phaser.Scene {
-  
   constructor() {
     super("PreloadScene");
   }
 
   preload() {
+    this.load.on("progress", function (value) {
+      console.log(value);
+    });
+
+    this.load.on("fileprogress", function (file) {
+      console.log(file.src);
+    });
+    
+    this.load.on("complete", function () {
+      console.log("complete");
+    });
+
     this.load.tilemapTiledJSON("map", "assets/json_exporta.tmj");
     this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
 
@@ -21,10 +32,18 @@ class Preload extends Phaser.Scene {
       frameHeight: 32,
       spacing: 32,
     });
+
+    this.load.spritesheet("birdman", "assets/enemy/enemy_sheet.png", {
+      frameWidth: 32,
+      frameHeight: 64,
+      spacing: 32,
+    });
   }
 
   create() {
     this.scene.start("GameScene");
+
+    
   }
 }
 
