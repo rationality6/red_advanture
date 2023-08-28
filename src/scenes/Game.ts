@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Player from "../entities/Player";
+import BirdMan from "../entities/BirdMan";
 
 export default class GameScene extends Phaser.Scene {
   colliderLayer: any;
@@ -7,25 +8,6 @@ export default class GameScene extends Phaser.Scene {
 
   constructor() {
     super("GameScene");
-  }
-
-  preload() {
-    this.load.tilemapTiledJSON("map", "assets/json_exporta.tmj");
-    this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
-
-    this.load.image("tiles-1", "assets/main_lev_build_1.png");
-    this.load.image("tiles-2", "assets/main_lev_build_2.png");
-
-    this.load.spritesheet("catLaying", "assets/cat_laying.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-
-    this.load.spritesheet("player", "assets/player/move_sprite_1.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-      spacing: 32,
-    });
   }
 
   playSong() {
@@ -42,7 +24,7 @@ export default class GameScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
     spaceBar.on("down", () => {
-      this.playSong()
+      this.playSong();
     });
 
     const map = this.make.tilemap({ key: "map" });
@@ -78,6 +60,8 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.add.sprite(250, 356, "catLaying").setScale(1).play("catLaying");
+
+    const birdman = new BirdMan(this, 100, 100);
   }
 
   setupFollowupCameraOn(player) {
