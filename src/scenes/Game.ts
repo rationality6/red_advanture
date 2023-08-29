@@ -1,8 +1,10 @@
 import Phaser from "phaser";
+import PhaserSceneTool from "./PhaserSceneTool";
+
 import Player from "../entities/Player";
 import BirdMan from "../entities/BirdMan";
 
-export default class GameScene extends Phaser.Scene {
+export default class GameScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
 
@@ -13,9 +15,7 @@ export default class GameScene extends Phaser.Scene {
   playSong() {
     if (this.bgStarted === false) {
       this.bgStarted = true;
-      let bgSound = new Audio("./assets/sounds/super_shy.mp3");
-      bgSound.loop = true;
-      bgSound.play();
+      this.sound.play("bgSoundSuperShy", { loop: -1 });
     }
   }
 

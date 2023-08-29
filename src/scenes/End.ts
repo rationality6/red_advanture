@@ -1,7 +1,9 @@
 import Phaser from "phaser";
+import PhaserSceneTool from "./PhaserSceneTool";
+
 import Player from "../entities/player";
 
-export default class EndScene extends Phaser.Scene {
+export default class EndScene extends PhaserSceneTool {
   private colliderLayer: any;
 
   constructor() {
@@ -47,7 +49,7 @@ export default class EndScene extends Phaser.Scene {
 
     this.physics.add.overlap(player, endOfSprite, () => {
       console.log("end");
-      this.add.image(400, 300, "logo");
+      this.add.image(400, 300, "interpretLogoWithCat");
     });
   }
 }
