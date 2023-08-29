@@ -5,7 +5,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
   private gravity: number = 500;
   private jumpCount: number = 0;
-  
+
   private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
 
@@ -78,7 +78,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
     }
 
-    this.jumpCheck(isSpaceJustDown, isUpJustDown, onFloorValue)
+    this.jumpCheck(isSpaceJustDown, isUpJustDown, onFloorValue);
 
     if (onFloorValue) {
       this.jumpCount = 0;
@@ -91,13 +91,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       : this.play("jump", true);
   }
 
-  jumpCheck(isSpaceJustDown, isUpJustDown, onFloor){
+  jumpCheck(isSpaceJustDown, isUpJustDown, onFloor) {
     if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
+      this.scene.sound.add("jumpSound").play();
       this.setVelocityY(-400);
       this.jumpCount += 1;
     }
   }
-
 }
 
 export default Player;

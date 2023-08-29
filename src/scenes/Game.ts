@@ -43,8 +43,6 @@ export default class GameScene extends PhaserSceneTool {
     const player = new Player(this, zones.start.x, zones.start.y, "player");
     this.createEndOfLevel(player, zones.end);
 
-    const enemy = new BirdMan(this, 100, 100);
-
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
     player.addCollider(this.colliderLayer);
@@ -64,6 +62,9 @@ export default class GameScene extends PhaserSceneTool {
     this.add.sprite(270, 365, "catLaying").setScale(1).play("catLaying");
 
     const birdman = new BirdMan(this, 100, 100);
+    birdman.addCollider(this.colliderLayer);
+
+    const enemy = new BirdMan(this, 400, 100);
   }
 
   setupFollowupCameraOn(player) {
