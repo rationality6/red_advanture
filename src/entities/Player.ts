@@ -98,6 +98,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.jumpCount += 1;
     }
   }
+  
 }
 
 export default Player;

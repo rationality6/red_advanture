@@ -33,6 +33,7 @@ class Preload extends PhaserSceneTool {
 
     this.load.audio("bgSoundSuperShy", "assets/sounds/super_shy.mp3");
     this.load.audio("jumpSound", "assets/sounds/jump.mp3");
+    this.load.audio("meow", "assets/sounds/meow.mp3");
 
     // this.loadingImagesMockup();
   }
@@ -87,7 +88,7 @@ class Preload extends PhaserSceneTool {
     this.load.on("progress", (value) => {
       percentText.setText(parseInt(value * 100) + "%");
       progressBar.clear();
-      progressBar.fillStyle(0xffffff,0.8);
+      progressBar.fillStyle(0xffffff, 0.8);
       progressBar.fillRect(this.gameWidth / 2 - 160, 280, 300 * value, 30);
     });
 
@@ -104,7 +105,7 @@ class Preload extends PhaserSceneTool {
     });
   }
 
-  create() {
+  async create() {
     this.cameras.main.fadeIn(1000, 255, 255, 255);
 
     const logo = this.add.image(
@@ -113,9 +114,9 @@ class Preload extends PhaserSceneTool {
       "interpretLogoWithCat"
     );
 
-    setTimeout(() => {
-      this.scene.start("GameScene");
-    }, 3000);
+    const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
+    await this.setDelay(logoExposeSetting);
+    this.scene.start("GameScene");
   }
 }
 

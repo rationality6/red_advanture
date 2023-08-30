@@ -1,6 +1,9 @@
 import PhaserSceneTool from "./PhaserSceneTool";
 
 class PreloadLogo extends PhaserSceneTool {
+  scene: any;
+  load: any;
+
   constructor() {
     super("PreloadLogoScene");
   }

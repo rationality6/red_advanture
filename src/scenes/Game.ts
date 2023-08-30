@@ -15,7 +15,10 @@ export default class GameScene extends PhaserSceneTool {
   playSong() {
     if (this.bgStarted === false) {
       this.bgStarted = true;
-      this.sound.play("bgSoundSuperShy", { loop: -1 });
+      this.sound.play("bgSoundSuperShy", {
+        loop: -1,
+        volume: 0.1,
+      });
     }
   }
 
@@ -59,10 +62,18 @@ export default class GameScene extends PhaserSceneTool {
       repeat: -1,
     });
 
-    this.add.sprite(270, 365, "catLaying").setScale(1).play("catLaying");
+    const catLaying = this.physics.add
+      .sprite(270, 365, "catLaying")
+      .setScale(1)
+      .play("catLaying");
+
+    player.addCollider(catLaying, () => {
+      this.sound.play("meow");
+    });
 
     const birdman = new BirdMan(this, 100, 100);
     birdman.addCollider(this.colliderLayer);
+    birdman.addCollider(player);
 
     const enemy = new BirdMan(this, 400, 100);
   }
