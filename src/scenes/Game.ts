@@ -4,9 +4,12 @@ import PhaserSceneTool from "./PhaserSceneTool";
 import Player from "../entities/Player";
 import BirdMan from "../entities/BirdMan";
 
+import Enemies from "../groups/Enemies";
+
 export default class GameScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
+  player: Player;
 
   constructor() {
     super("GameScene");
@@ -41,16 +44,17 @@ export default class GameScene extends PhaserSceneTool {
     map.createLayer("leafs", tileset1!, 0, 0);
 
     const zones = this.getPlayerZones(map);
+    const enemySpawns = map.getObjectLayer("enemys");
 
     // const player = new Player(this, zones.start.x, zones.start.y, "player");
-    const player = new Player(this, zones.start.x, zones.start.y, "player");
-    this.createEndOfLevel(player, zones.end);
+    this.player = new Player(this, zones.start.x, zones.start.y, "player");
+    this.createEndOfLevel(this.player, zones.end);
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
-    player.addCollider(this.colliderLayer);
+    this.player.addCollider(this.colliderLayer);
 
-    this.setupFollowupCameraOn(player);
+    this.setupFollowupCameraOn(this.player);
 
     this.anims.create({
       key: "catLaying",
@@ -67,15 +71,34 @@ export default class GameScene extends PhaserSceneTool {
       .setScale(1)
       .play("catLaying");
 
-    player.addCollider(catLaying, () => {
+    this.player.addCollider(catLaying, () => {
       this.sound.play("meow");
     });
 
-    const birdman = new BirdMan(this, 100, 100);
-    birdman.addCollider(this.colliderLayer);
-    birdman.addCollider(player);
+    const catLaying2 = this.physics.add
+      .sprite(50, 50, "catLaying")
+      .setScale(1)
+      .play("catLaying");
 
-    const enemy = new BirdMan(this, 400, 100);
+    this.player.addCollider(catLaying2, () => {
+      this.sound.play("meow");
+    });
+
+    const enemiesGroup = this.createEnemySpawns(enemySpawns);
+    enemiesGroup.addCollider(this.player, () => {});
+    enemiesGroup.addCollider(this.colliderLayer);
+  }
+
+  createEnemySpawns(spawnLayer) {
+    const enemies = new Enemies(this);
+    const enemyTypes = enemies.getTypes();
+
+    spawnLayer.objects.forEach((spawnPoint) => {
+      const enemy = new enemyTypes[spawnPoint.type](this, spawnPoint.x, spawnPoint.y);
+      enemies.add(enemy);
+    });
+    
+    return enemies
   }
 
   setupFollowupCameraOn(player) {

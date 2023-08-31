@@ -8,7 +8,7 @@ class Preload extends PhaserSceneTool {
   preload() {
     this.loadLoadingScreen();
 
-    this.load.tilemapTiledJSON("map", "assets/json_exporta.tmj");
+    this.load.tilemapTiledJSON("map", "assets/level1.tmj");
     this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
 
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
