@@ -76,7 +76,7 @@ export default class GameScene extends PhaserSceneTool {
     });
 
     const catLaying2 = this.physics.add
-      .sprite(50, 50, "catLaying")
+      .sprite(50, 90, "catLaying")
       .setScale(1)
       .play("catLaying");
 

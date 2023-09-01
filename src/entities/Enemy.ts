@@ -14,11 +14,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     Object.assign(this, collidable);
 
     this.init();
+    this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
 
   init(): void {
     this.gravity = 500;
-    this.speed = 150;
+    this.speed = 20;
     this.health = 100;
 
     this.body.setGravityY(this.gravity);
@@ -27,6 +28,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.setSize(25, 45);
     this.setOffset(5, 20);
+  }
+
+  update(time, delta) {
+    this.setVelocityX(this.speed);
   }
 }
 
