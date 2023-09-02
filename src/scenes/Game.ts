@@ -3,8 +3,10 @@ import PhaserSceneTool from "./PhaserSceneTool";
 
 import Player from "../entities/Player";
 import BirdMan from "../entities/BirdMan";
+import CatLaying from "../entities/CatLaying";
 
 import Enemies from "../groups/Enemies";
+import Cats from "../groups/Cats";
 
 export default class GameScene extends PhaserSceneTool {
   colliderLayer: any;
@@ -35,7 +37,6 @@ export default class GameScene extends PhaserSceneTool {
 
     const map = this.make.tilemap({ key: "map" });
     const tileset1 = map.addTilesetImage("main_lev_build_1", "tiles-1");
-    // const tileset2 = map.addTilesetImage("main_lev_build_2", "tiles-2");
 
     this.colliderLayer = map.createLayer("collidersLayer", tileset1!, 0, 0);
     map.createLayer("moss", tileset1!, 0, 0);
@@ -46,7 +47,6 @@ export default class GameScene extends PhaserSceneTool {
     const zones = this.getPlayerZones(map);
     const enemySpawns = map.getObjectLayer("enemys");
 
-    // const player = new Player(this, zones.start.x, zones.start.y, "player");
     this.player = new Player(this, zones.start.x, zones.start.y, "player");
     this.createEndOfLevel(this.player, zones.end);
 
@@ -66,27 +66,43 @@ export default class GameScene extends PhaserSceneTool {
       repeat: -1,
     });
 
-    const catLaying = this.physics.add
-      .sprite(270, 365, "catLaying")
-      .setScale(1)
-      .play("catLaying");
-
-    this.player.addCollider(catLaying, () => {
-      this.sound.play("meow");
-    });
-
-    const catLaying2 = this.physics.add
-      .sprite(50, 90, "catLaying")
-      .setScale(1)
-      .play("catLaying");
-
-    this.player.addCollider(catLaying2, () => {
-      this.sound.play("meow");
-    });
+    this.createCatSpawns(map.getObjectLayer("cats"));
 
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
     enemiesGroup.addCollider(this.player, () => {});
     enemiesGroup.addCollider(this.colliderLayer);
+
+    this.graphics = this.add.graphics();
+    this.line = new Phaser.Geom.Line();
+    this.graphics.lineStyle(1, 0x00ff00);
+
+    this.input.on("pointerdown", this.startDrawing, this);
+    this.input.on("pointerup", this.finishDrawing, this);
+  }
+
+  startDrawing(pointer) {
+    this.line.x1 = pointer.worldX;
+    this.line.y1 = pointer.worldY;
+    console.log('start drawing')
+  }
+  finishDrawing(pointer) {
+    this.line.x2 = pointer.worldX;
+    this.line.y2 = pointer.worldY;
+
+    this.graphics.strokeLineShape(this.line);
+
+    console.log('finish drawing')
+  }
+
+  createCatSpawns(catSpawns) {
+    const catGroup = new Cats(this);
+    const cat1 = new CatLaying(this, 270, 365);
+    catGroup.add(cat1);
+    const cat2 = new CatLaying(this, 50, 90);
+    catGroup.add(cat2);
+    catGroup.addCollider(this.player, () => {
+      this.sound.play("meow");
+    });
   }
 
   createEnemySpawns(spawnLayer) {
@@ -94,11 +110,15 @@ export default class GameScene extends PhaserSceneTool {
     const enemyTypes = enemies.getTypes();
 
     spawnLayer.objects.forEach((spawnPoint) => {
-      const enemy = new enemyTypes[spawnPoint.type](this, spawnPoint.x, spawnPoint.y);
+      const enemy = new enemyTypes[spawnPoint.type](
+        this,
+        spawnPoint.x,
+        spawnPoint.y
+      );
       enemies.add(enemy);
     });
-    
-    return enemies
+
+    return enemies;
   }
 
   setupFollowupCameraOn(player) {
