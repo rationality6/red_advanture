@@ -3,6 +3,9 @@ import PhaserSceneTool from "./PhaserSceneTool";
 
 import Player from "../entities/player";
 
+import CatLaying from "../entities/CatLaying";
+import Cats from "../groups/Cats";
+
 export default class EndScene extends PhaserSceneTool {
   private colliderLayer: any;
 
@@ -20,14 +23,24 @@ export default class EndScene extends PhaserSceneTool {
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
-    const player = new Player(this, 100, 100, "player");
-    player.addCollider(this.colliderLayer);
+    this.player = new Player(this, 100, 100, "player");
+    this.player.addCollider(this.colliderLayer);
 
     const back = this.getPlayerZones(map).back;
 
-    this.createEndOfLevel(player, back)
+    this.createEndOfLevel(this.player, back)
 
-    this.setupFollowupCameraOn(player)
+    this.setupFollowupCameraOn(this.player)
+
+    const catGroup = new Cats(this);
+    const cat1 = new CatLaying(this, 270, 365);
+    catGroup.add(cat1);
+    const cat2 = new CatLaying(this, 50, 90);
+    catGroup.add(cat2);
+    catGroup.addCollider(this.player, () => {
+      this.sound.play("meow");
+    });
+    
   }
 
   setupFollowupCameraOn(player) {
