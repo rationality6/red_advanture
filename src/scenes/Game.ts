@@ -8,6 +8,8 @@ import CatLaying from "../entities/CatLaying";
 import Enemies from "../groups/Enemies";
 import Cats from "../groups/Cats";
 
+import cameraMixin from "../mixins/cameraMixin";
+
 export default class GameScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
@@ -15,6 +17,8 @@ export default class GameScene extends PhaserSceneTool {
 
   constructor() {
     super("GameScene");
+
+    Object.assign(this, cameraMixin);
   }
 
   playSong() {
@@ -122,11 +126,6 @@ export default class GameScene extends PhaserSceneTool {
     });
 
     return enemies;
-  }
-
-  setupFollowupCameraOn(player) {
-    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(2);
-    this.cameras.main.startFollow(player);
   }
 
   getPlayerZones(map: any) {

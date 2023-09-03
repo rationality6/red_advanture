@@ -271,8 +271,8 @@
                  "type":"Birdman",
                  "visible":true,
                  "width":0,
-                 "x":766.47564469914,
-                 "y":608.882521489971
+                 "x":766.476,
+                 "y":608.883
                 }, 
                 {
                  "height":0,
@@ -283,8 +283,8 @@
                  "type":"Birdman",
                  "visible":true,
                  "width":0,
-                 "x":120.343839541547,
-                 "y":65.9025787965616
+                 "x":310.199072463768,
+                 "y":171.699701449275
                 }, 
                 {
                  "height":0,
@@ -295,8 +295,8 @@
                  "type":"Birdman",
                  "visible":true,
                  "width":0,
-                 "x":641.833810888252,
-                 "y":246.418338108883
+                 "x":641.834,
+                 "y":246.418
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -330,7 +330,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":214.648,
+                 "x":229.140753623188,
                  "y":351.113
                 }],
          "opacity":1,
@@ -338,9 +338,44 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":10,
+         "name":"cats",
+         "objects":[
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":42.029,
+                 "y":95.6522
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":284.058,
+                 "y":359.42
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":9,
- "nextobjectid":9,
+ "nextlayerid":11,
+ "nextobjectid":11,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
@@ -349,7 +384,7 @@
         {
          "columns":64,
          "firstgid":1,
-         "image":"..\/..\/Downloads\/assets\/main_lev_build_1.png",
+         "image":"..\/phaser_basic_assets\/main_lev_build_1.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,

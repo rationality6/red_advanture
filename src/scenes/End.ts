@@ -6,11 +6,15 @@ import Player from "../entities/player";
 import CatLaying from "../entities/CatLaying";
 import Cats from "../groups/Cats";
 
+import cameraMixin from "../mixins/cameraMixin";
+
 export default class EndScene extends PhaserSceneTool {
   private colliderLayer: any;
 
   constructor() {
     super("EndScene");
+
+    Object.assign(this, cameraMixin);
   }
 
   create() {
@@ -44,7 +48,7 @@ export default class EndScene extends PhaserSceneTool {
   }
 
   setupFollowupCameraOn(player) {
-    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(2);
+    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(1.8);
     this.cameras.main.startFollow(player);
   }
 
