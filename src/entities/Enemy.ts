@@ -5,6 +5,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   private speed!: number;
   private health!: number;
   private platformCollidersLayer;
+  private timeFromLastTurn: number;
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
     super(scene, x, y, key);
@@ -29,16 +30,18 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       },
     });
 
+    this.timeFromLastTurn = 0
+
     this.body.setGravityY(this.gravity);
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
 
     this.setSize(25, 45);
     this.setOffset(5, 20);
+    this.setVelocityX(this.speed);
   }
 
   update(time, delta) {
-    this.setVelocityX(this.speed);
     const { ray, hasHit } = this.raycast(
       this.body,
       this.platformCollidersLayer,
@@ -46,12 +49,15 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       5
     );
 
-    if (hasHit) {
-
+    if (!hasHit && this.timeFromLastTurn + 1000 < time) {
+      this.setFlipX(!this.flipX)
+      this.setVelocityX(this.speed = -this.speed)
+      this.timeFromLastTurn = time
     }
 
     this.rayGraphics.clear();
     this.rayGraphics.strokeLineShape(ray);
+    this.timeF
   }
 
   setPlatformColliders(platformCollidersLayer) {
