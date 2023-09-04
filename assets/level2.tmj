@@ -124,17 +124,52 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1122.03732571061,
-                 "y":325.625792670716
+                 "x":1122.04,
+                 "y":325.626
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":5,
+         "name":"enemies",
+         "objects":[
+                {
+                 "height":0,
+                 "id":4,
+                 "name":"backZone",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1122.04,
+                 "y":325.626
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"spawn",
+                 "point":true,
+                 "rotation":0,
+                 "type":"Birdman",
+                 "visible":true,
+                 "width":0,
+                 "x":369.642154935116,
+                 "y":423.384454056888
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":4,
+ "nextlayerid":6,
+ "nextobjectid":6,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
@@ -143,7 +178,7 @@
         {
          "columns":64,
          "firstgid":1,
-         "image":"..\/..\/Downloads\/assets\/main_lev_build_2.png",
+         "image":"..\/phaser_basic_assets\/main_lev_build_2.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
