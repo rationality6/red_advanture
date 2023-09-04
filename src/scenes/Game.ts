@@ -8,6 +8,8 @@ import CatLaying from "../entities/CatLaying";
 import Enemies from "../groups/Enemies";
 import Cats from "../groups/Cats";
 
+import cameraMixin from "../mixins/cameraMixin";
+
 export default class GameScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
@@ -15,6 +17,8 @@ export default class GameScene extends PhaserSceneTool {
 
   constructor() {
     super("GameScene");
+
+    Object.assign(this, cameraMixin);
   }
 
   playSong() {
@@ -75,23 +79,25 @@ export default class GameScene extends PhaserSceneTool {
     this.graphics = this.add.graphics();
     this.line = new Phaser.Geom.Line();
     this.graphics.lineStyle(1, 0x00ff00);
-
-    this.input.on("pointerdown", this.startDrawing, this);
-    this.input.on("pointerup", this.finishDrawing, this);
   }
 
-  startDrawing(pointer) {
-    this.line.x1 = pointer.worldX;
-    this.line.y1 = pointer.worldY;
-    console.log('start drawing')
-  }
-  finishDrawing(pointer) {
+  finishDrawing(pointer, layer) {
     this.line.x2 = pointer.worldX;
     this.line.y2 = pointer.worldY;
 
+    this.graphics.clear();
     this.graphics.strokeLineShape(this.line);
 
-    console.log('finish drawing')
+    this.tileHits = layer.getTilesWithinShape(this.line);
+
+    if (this.tileHits.length > 0) {
+      this.tileHits.forEach((tile) => {
+        if (tile.index !== -1) {
+          tile.setCollision(true);
+        }
+      });
+    }
+
   }
 
   createCatSpawns(catSpawns) {
@@ -115,15 +121,11 @@ export default class GameScene extends PhaserSceneTool {
         spawnPoint.x,
         spawnPoint.y
       );
+      enemy.setPlatformColliders(this.colliderLayer)
       enemies.add(enemy);
     });
 
     return enemies;
-  }
-
-  setupFollowupCameraOn(player) {
-    this.cameras.main.setBounds(0, 0, 1200, 600).setZoom(2);
-    this.cameras.main.startFollow(player);
   }
 
   getPlayerZones(map: any) {
@@ -143,4 +145,6 @@ export default class GameScene extends PhaserSceneTool {
       this.scene.start("EndScene");
     });
   }
+
+  update(time: number, delta: number): void {}
 }
