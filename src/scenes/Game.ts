@@ -73,12 +73,12 @@ export default class GameScene extends PhaserSceneTool {
     this.createCatSpawns(map.getObjectLayer("cats"));
 
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
-    enemiesGroup.addCollider(this.player, () => {});
+    enemiesGroup.addCollider(this.player, this.onPlayerCollision);
     enemiesGroup.addCollider(this.colliderLayer);
+  }
 
-    this.graphics = this.add.graphics();
-    this.line = new Phaser.Geom.Line();
-    this.graphics.lineStyle(1, 0x00ff00);
+  onPlayerCollision(enemy: BirdMan, player: Player){
+    player.takesHit();
   }
 
   finishDrawing(pointer, layer) {
@@ -97,7 +97,6 @@ export default class GameScene extends PhaserSceneTool {
         }
       });
     }
-
   }
 
   createCatSpawns(catSpawns) {
@@ -121,7 +120,8 @@ export default class GameScene extends PhaserSceneTool {
         spawnPoint.x,
         spawnPoint.y
       );
-      enemy.setPlatformColliders(this.colliderLayer)
+      enemy.setPlatformColliders(this.colliderLayer);
+      enemy.setPlayer(this.player)
       enemies.add(enemy);
     });
 

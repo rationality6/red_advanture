@@ -7,6 +7,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private jumpCount: number = 0;
   private moveSpeed: number = 200;
 
+  private hasBeenHit: boolean = false;
+  bounceVelocity: number = 250;
+
   private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
 
@@ -64,6 +67,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
+    if (this.hasBeenHit) {
+      return;
+    }
     const { left, right, space, up } = this.cursors;
     const onFloorValue = this.body.onFloor();
     const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
@@ -98,6 +104,25 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-350);
       this.jumpCount += 1;
     }
+  }
+
+  bounceOff() {
+    this.body.touching.right
+      ? this.setVelocity(-this.bounceVelocity, -this.bounceVelocity)
+      : this.setVelocity(this.bounceVelocity, -this.bounceVelocity);
+  }
+
+  takesHit(initiator) {
+    this.hasBeenHit = true;
+    this.bounceOff();
+
+    this.scene.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.hasBeenHit = false;
+      },
+      loop: false,
+    });
   }
 }
 
