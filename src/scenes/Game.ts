@@ -15,9 +15,9 @@ export default class GameScene extends PhaserSceneTool {
   private bgStarted = false;
   player: Player;
 
-  constructor() {
+  constructor(config) {
     super("GameScene");
-
+    this.config = config
     Object.assign(this, cameraMixin);
   }
 

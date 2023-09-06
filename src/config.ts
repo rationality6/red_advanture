@@ -1,7 +1,12 @@
 import Phaser from 'phaser';
 
+const SHARED_CONFIG = {
+  debug: true
+}
+
 export default {
   type: Phaser.AUTO,
+  ...SHARED_CONFIG,
   parent: 'game',
   backgroundColor: 'transparent',
   scale: {
@@ -13,7 +18,7 @@ export default {
   physics: {
     default: "arcade",
     arcade: {
-      // debug: true,
+      debug: SHARED_CONFIG.debug,
     },
   },
 };

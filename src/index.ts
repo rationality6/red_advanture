@@ -11,7 +11,7 @@ new Phaser.Game(
     scene: [
       PreloadLogo,
       Preload,
-      GameScene,
+      new GameScene(config),
       EndScene,
     ],
   })

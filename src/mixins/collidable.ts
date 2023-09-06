@@ -46,8 +46,10 @@ export default {
       this.setVelocityX(this.speed);
     }
 
-    this.frontRayGraphics.clear();
-    this.frontRayGraphics.strokeLineShape(line1);
+    if (this.config.debug) {
+      this.frontRayGraphics.clear();
+      this.frontRayGraphics.strokeLineShape(line1);
+    }
   },
 
   bodyPositionDifferenceX: 0,

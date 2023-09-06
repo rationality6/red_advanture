@@ -17,6 +17,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     Object.assign(this, collidable);
 
+    this.config = scene.config
+
     this.init();
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
@@ -64,8 +66,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.timeFromLastTurn = time;
     }
 
-    this.rayGraphics.clear();
-    this.rayGraphics.strokeLineShape(ray);
+    if(this.config.debug && ray){
+      this.rayGraphics.clear();
+      this.rayGraphics.strokeLineShape(ray);
+    }
 
     this.frontRaycast(this.player, this.body);
   }

@@ -1,5 +1,6 @@
 import initAnimations from "./anims/playerAnims";
 import collidable from "../mixins/collidable";
+import Projectile from "../attacks/Projectile";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
@@ -31,6 +32,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
     initAnimations(this.scene.anims);
+
+    this.scene.input.keyboard.on("keydown-Z", () => {
+      console.log("z");
+      const projectile = new Projectile(
+        this.scene,
+        this.x,
+        this.y,
+        "fireball",
+        this.flipX ? -1 : 1
+      );
+    });
   }
 
   setInput() {
@@ -98,6 +110,15 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       : this.play("jump", true);
   }
 
+  playDamageTween() {
+    return this.scene.tweens.add({
+      targets: this,
+      duration: 200,
+      repeat: -1,
+      tint: 0xffffff,
+    });
+  }
+
   jumpCheck(isSpaceJustDown, isUpJustDown, onFloor) {
     if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
       this.scene.sound.add("jumpSound").play();
@@ -115,13 +136,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   takesHit(initiator) {
     this.hasBeenHit = true;
     this.bounceOff();
+    const hitAnim = this.playDamageTween();
 
-    this.scene.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.hasBeenHit = false;
-      },
-      loop: false,
+    this.scene.time.delayedCall(1000, () => {
+      this.hasBeenHit = false;
+      hitAnim.stop();
+      this.clearTint();
     });
   }
 }
