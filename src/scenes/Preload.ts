@@ -14,6 +14,11 @@ class Preload extends PhaserSceneTool {
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
     this.load.image("tiles-2", "assets/main_lev_build_2.png");
 
+    this.load.spritesheet("fireball", "assets/player/fire_ball.png",{
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+
     this.load.spritesheet("catLaying", "assets/cat_laying.png", {
       frameWidth: 32,
       frameHeight: 32,

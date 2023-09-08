@@ -34,14 +34,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     initAnimations(this.scene.anims);
 
     this.scene.input.keyboard.on("keydown-Z", () => {
-      console.log("z");
       const projectile = new Projectile(
         this.scene,
         this.x,
         this.y,
         "fireball",
-        this.flipX ? -1 : 1
       );
+      projectile.fire()
     });
   }
 
