@@ -1,12 +1,15 @@
 import initAnimations from "./anims/playerAnims";
 import collidable from "../mixins/collidable";
 import Projectile from "../attacks/Projectile";
+import Projectiles from "../attacks/Projectiles";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
   private gravity: number = 500;
   private jumpCount: number = 0;
   private moveSpeed: number = 200;
+
+  private lastDirection: Phaser.Physics.Arcade.Facing = Phaser.Physics.Arcade.FACING_RIGHT;
 
   private hasBeenHit: boolean = false;
   bounceVelocity: number = 250;
@@ -33,14 +36,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     initAnimations(this.scene.anims);
 
+    this.projectiles = new Projectiles(this.scene)
+
     this.scene.input.keyboard.on("keydown-Z", () => {
-      const projectile = new Projectile(
-        this.scene,
-        this.x,
-        this.y,
-        "fireball",
-      );
-      projectile.fire()
+
+      this.projectiles.fireProjectile(this)
     });
   }
 
@@ -87,9 +87,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     const isUpJustDown = Phaser.Input.Keyboard.JustDown(up);
 
     if (left.isDown) {
+      this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT
       this.setVelocityX(-this.moveSpeed);
       this.setFlipX(true);
     } else if (right.isDown) {
+      this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT
       this.setVelocityX(this.moveSpeed);
       this.setFlipX(false);
     } else {
