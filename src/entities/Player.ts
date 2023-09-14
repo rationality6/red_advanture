@@ -16,6 +16,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private comboTimeoutId: any;
   private comboCount: number = 0;
 
+  private middleOfAttackTimeOutId: any;
+
   private lastDirection: Phaser.Physics.Arcade.Facing =
     Phaser.Physics.Arcade.FACING_RIGHT;
 
@@ -55,7 +57,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "lafull-attack1");
 
     this.scene.input.keyboard.on("keydown-Z", () => {
-      if (this.middleOfAttack) {
+      if ((this.middleOfAttack && this.comboCount <= 1) || this.hasBeenHit ) {
+        clearTimeout(this.middleOfAttackTimeOutId);
+        this.middleOfAttackTimeOutId = setTimeout(() => {
+          console.log("pressing z");
+          const ke = new KeyboardEvent("keydown", {
+            bubbles: true,
+            cancelable: true,
+            keyCode: 90,
+          });
+          document.body.dispatchEvent(ke);
+        }, 100);
         return;
       }
 
@@ -84,12 +96,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.scene.input.keyboard.on("keydown-X", () => {
       this.projectiles.fireProjectile(this);
-    });
-  }
-
-  returnPromise() {
-    return new Promise((resolve, reject) => {
-      resolve();
     });
   }
 
@@ -180,7 +186,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   jumpCheck(isSpaceJustDown, isUpJustDown, onFloor) {
     if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
-      this.scene.sound.add("jumpSound").play({ volume: 0.5 });
+      this.scene.sound.add("jumpSound").play({ volume: 0.1 });
       this.setVelocityY(-350);
       this.jumpCount += 1;
     }
@@ -214,7 +220,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack1", true);
 
     this.scene.time.delayedCall(380, () => {
-      new MeleeCollides(this.scene, this.x,this.y);
+      new MeleeCollides(this.scene, this.x, this.y);
       this.middleOfAttack = false;
     });
   }
@@ -242,7 +248,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.play("lafull-attack3", true);
 
-    this.scene.time.delayedCall(380, () => {
+    this.scene.time.delayedCall(580, () => {
       this.middleOfAttack = false;
     });
   }
