@@ -1,7 +1,11 @@
 import initAnimations from "./anims/playerAnims";
+import initLafullAnimations from "./anims/lafullAnims";
 import collidable from "../mixins/collidable";
-import Projectile from "../attacks/Projectile";
+
 import Projectiles from "../attacks/Projectiles";
+
+import MeleeWeapon from "../attacks/MeleeWeapon";
+import MeleeCollides from "../attacks/MeleeCollides";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
@@ -9,10 +13,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private jumpCount: number = 0;
   private moveSpeed: number = 200;
 
-  private lastDirection: Phaser.Physics.Arcade.Facing = Phaser.Physics.Arcade.FACING_RIGHT;
+  private comboTimeoutId: any;
+  private comboCount: number = 0;
+
+  private lastDirection: Phaser.Physics.Arcade.Facing =
+    Phaser.Physics.Arcade.FACING_RIGHT;
 
   private hasBeenHit: boolean = false;
   bounceVelocity: number = 250;
+
+  private middleOfAttack: boolean = false;
+  private middleOfCombo: boolean = false;
 
   private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
@@ -29,18 +40,56 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   init(): void {
+    this.setSize(25, 47);
+    this.setOffset(70, 55);
     this.body.setGravityY(this.gravity);
     this.setCollideWorldBounds(true);
 
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
     initAnimations(this.scene.anims);
+    initLafullAnimations(this.scene.anims);
 
-    this.projectiles = new Projectiles(this.scene)
+    this.projectiles = new Projectiles(this.scene);
+
+    this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "lafull-attack1");
 
     this.scene.input.keyboard.on("keydown-Z", () => {
+      if (this.middleOfAttack) {
+        return;
+      }
 
-      this.projectiles.fireProjectile(this)
+      if (this.comboCount == 0) {
+        this.meleeAttack();
+      } else if (this.comboCount == 1) {
+        this.meleeAttack2();
+      } else {
+        this.meleeAttack3();
+      }
+
+      this.middleOfCombo = true;
+      this.comboCount += 1;
+      if (this.comboCount > 2) {
+        this.comboCount = 0;
+      }
+
+      clearTimeout(this.comboTimeoutId);
+      this.comboTimeoutId = setTimeout(() => {
+        this.comboCount = 0;
+        this.middleOfCombo = false;
+      }, 700);
+
+      // this.meleeWeapon.swing(this);
+    });
+
+    this.scene.input.keyboard.on("keydown-X", () => {
+      this.projectiles.fireProjectile(this);
+    });
+  }
+
+  returnPromise() {
+    return new Promise((resolve, reject) => {
+      resolve();
     });
   }
 
@@ -81,17 +130,26 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.hasBeenHit) {
       return;
     }
+
+    if (this.middleOfAttack) {
+      return;
+    }
+
+    if (this.middleOfCombo) {
+      return;
+    }
+
     const { left, right, space, up } = this.cursors;
     const onFloorValue = this.body.onFloor();
     const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
     const isUpJustDown = Phaser.Input.Keyboard.JustDown(up);
 
     if (left.isDown) {
-      this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT
+      this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
       this.setVelocityX(-this.moveSpeed);
       this.setFlipX(true);
     } else if (right.isDown) {
-      this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT
+      this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
       this.setVelocityX(this.moveSpeed);
       this.setFlipX(false);
     } else {
@@ -106,9 +164,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     onFloorValue
       ? this.body.velocity.x !== 0
-        ? this.play("run", true)
-        : this.play("idle", true)
-      : this.play("jump", true);
+        ? this.play("lafull-run", true)
+        : this.play("lafull-idle", true)
+      : this.play("lafull-jump", true);
   }
 
   playDamageTween() {
@@ -122,7 +180,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   jumpCheck(isSpaceJustDown, isUpJustDown, onFloor) {
     if ((isSpaceJustDown || isUpJustDown) && (onFloor || this.jumpCount < 1)) {
-      this.scene.sound.add("jumpSound").play();
+      this.scene.sound.add("jumpSound").play({ volume: 0.5 });
       this.setVelocityY(-350);
       this.jumpCount += 1;
     }
@@ -143,6 +201,49 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.hasBeenHit = false;
       hitAnim.stop();
       this.clearTint();
+    });
+  }
+
+  meleeAttack() {
+    this.middleOfAttack = true;
+
+    if (this.body.velocity.x !== 0) {
+      this.setVelocityX(this.body.velocity.x / 3);
+    }
+
+    this.play("lafull-attack1", true);
+
+    this.scene.time.delayedCall(380, () => {
+      new MeleeCollides(this.scene, this.x,this.y);
+      this.middleOfAttack = false;
+    });
+  }
+
+  meleeAttack2() {
+    this.middleOfAttack = true;
+
+    if (this.body.velocity.x !== 0) {
+      this.setVelocityX(this.body.velocity.x / 3);
+    }
+
+    this.play("lafull-attack2", true);
+
+    this.scene.time.delayedCall(380, () => {
+      this.middleOfAttack = false;
+    });
+  }
+
+  meleeAttack3() {
+    this.middleOfAttack = true;
+
+    if (this.body.velocity.x !== 0) {
+      this.setVelocityX(this.body.velocity.x / 3);
+    }
+
+    this.play("lafull-attack3", true);
+
+    this.scene.time.delayedCall(380, () => {
+      this.middleOfAttack = false;
     });
   }
 }

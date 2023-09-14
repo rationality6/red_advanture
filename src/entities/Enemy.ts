@@ -1,4 +1,5 @@
 import collidable from "../mixins/collidable";
+import initAnims from "./anims/enemyAnims";
 
 class Enemy extends Phaser.Physics.Arcade.Sprite {
   private gravity: number = 0;
@@ -17,10 +18,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     Object.assign(this, collidable);
 
-    this.config = scene.config
+    this.config = scene.config;
 
     this.init();
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
+    initAnims(this.scene.anims);
   }
 
   init(): void {
@@ -66,7 +68,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.timeFromLastTurn = time;
     }
 
-    if(this.config.debug && ray){
+    if (this.config.debug && ray) {
       this.rayGraphics.clear();
       this.rayGraphics.strokeLineShape(ray);
     }

@@ -28,4 +28,14 @@ export default (anims) => {
     frameRate: 3,
     repeat: 1,
   });
+
+  anims.create({
+    key: "throw",
+    frames: anims.generateFrameNumbers("throw", {
+      start: 0,
+      end: 6,
+    }),
+    frameRate: 3,
+    repeat: 1,
+  });
 };

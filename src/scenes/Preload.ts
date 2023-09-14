@@ -14,7 +14,9 @@ class Preload extends PhaserSceneTool {
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
     this.load.image("tiles-2", "assets/main_lev_build_2.png");
 
-    this.load.spritesheet("fireball", "assets/player/fire_ball.png",{
+    this.load.image("hee_tree", "assets/hee_tree.png");
+
+    this.load.spritesheet("fireball", "assets/player/fire_ball.png", {
       frameWidth: 32,
       frameHeight: 32,
     });
@@ -30,7 +32,42 @@ class Preload extends PhaserSceneTool {
       spacing: 32,
     });
 
-    this.load.spritesheet("birdman", "assets/enemy/enemy_sheet.png", {
+    this.load.spritesheet("throw", "assets/player/throw_attack_sheet_1.png", {
+      frameWidth: 38,
+      frameHeight: 38,
+    });
+
+    this.load.spritesheet("lafull-idle", "assets/lafull/idle.png", {
+      frameWidth: 162,
+      frameHeight: 162,
+    });
+
+    this.load.spritesheet("lafull-run", "assets/lafull/run.png", {
+      frameWidth: 162,
+      frameHeight: 162,
+    });
+
+    this.load.spritesheet("lafull-jump", "assets/lafull/jump.png", {
+      frameWidth: 162,
+      frameHeight: 162,
+    });
+
+    this.load.spritesheet("lafull-attack1", "assets/lafull/attack1.png", {
+      frameWidth: 162,
+      frameHeight: 162,
+    });
+
+    this.load.spritesheet("lafull-attack2", "assets/lafull/attack2.png", {
+      frameWidth: 162,
+      frameHeight: 162,
+    });
+
+    this.load.spritesheet("lafull-attack3", "assets/lafull/attack3.png", {
+      frameWidth: 162,
+      frameHeight: 162,
+    });
+
+    this.load.spritesheet("birdman-idle", "assets/enemy/enemy_sheet.png", {
       frameWidth: 32,
       frameHeight: 64,
       spacing: 32,
@@ -39,14 +76,7 @@ class Preload extends PhaserSceneTool {
     this.load.audio("bgSoundSuperShy", "assets/sounds/super_shy.mp3");
     this.load.audio("jumpSound", "assets/sounds/jump.mp3");
     this.load.audio("meow", "assets/sounds/meow.mp3");
-
-    // this.loadingImagesMockup();
-  }
-
-  loadingImagesMockup() {
-    [...Array(5000).keys()].forEach((i) => {
-      this.load.image(`catWalking${i}`, "assets/cat_walking.png");
-    });
+    this.load.audio("silorMoon", "assets/sounds/silor_moon.mp3");
   }
 
   loadLoadingScreen() {

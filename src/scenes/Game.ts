@@ -24,7 +24,7 @@ export default class GameScene extends PhaserSceneTool {
   playSong() {
     if (this.bgStarted === false) {
       this.bgStarted = true;
-      this.sound.play("bgSoundSuperShy", {
+      this.sound.play("silorMoon", {
         loop: -1,
         volume: 0.1,
       });
@@ -48,10 +48,13 @@ export default class GameScene extends PhaserSceneTool {
     map.createLayer("trees", tileset1!, 0, 0);
     map.createLayer("leafs", tileset1!, 0, 0);
 
+    this.add.image(150, 298, "hee_tree").setOrigin(0, 0);
+    this.add.image(70, 296, "hee_tree").setOrigin(0, 0);
+
     const zones = this.getPlayerZones(map);
     const enemySpawns = map.getObjectLayer("enemys");
 
-    this.player = new Player(this, zones.start.x, zones.start.y, "player");
+    this.player = new Player(this, zones.start.x, zones.start.y, "lafull-idle");
     this.createEndOfLevel(this.player, zones.end);
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
