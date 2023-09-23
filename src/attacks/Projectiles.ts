@@ -5,7 +5,7 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
 
     this.createMultiple({
-      frameQuantity: 5,
+      frameQuantity: 1,
       active: false,
       visible: false,
       key: "fireball",
@@ -20,15 +20,20 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
       return;
     }
 
+    const center = initiator.getCenter();
+    let centerX
+
     if (initiator.lastDirection === Phaser.Physics.Arcade.FACING_RIGHT) {
       projectile.speed = Math.abs(projectile.speed);
       projectile.setFlipX(false);
+      centerX = center.x + 20;
     } else {
       projectile.speed = -Math.abs(projectile.speed);
       projectile.setFlipX(true);
+      centerX = center.x - 20;
     }
 
-    projectile.fire(initiator.x, initiator.y);
+    projectile.fire(centerX, initiator.y);
   }
 }
 

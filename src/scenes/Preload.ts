@@ -73,6 +73,7 @@ class Preload extends PhaserSceneTool {
       spacing: 32,
     });
 
+    this.load.audio("lightSaber", "assets/sounds/light_saber.mp3");
     this.load.audio("bgSoundSuperShy", "assets/sounds/super_shy.mp3");
     this.load.audio("jumpSound", "assets/sounds/jump.mp3");
     this.load.audio("meow", "assets/sounds/meow.mp3");

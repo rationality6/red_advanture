@@ -57,7 +57,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "lafull-attack1");
 
     this.scene.input.keyboard.on("keydown-Z", () => {
-      if ((this.middleOfAttack && this.comboCount <= 1) || this.hasBeenHit ) {
+      if ((this.middleOfAttack && this.comboCount <= 1) || this.hasBeenHit) {
         clearTimeout(this.middleOfAttackTimeOutId);
         this.middleOfAttackTimeOutId = setTimeout(() => {
           console.log("pressing z");
@@ -210,16 +210,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  reduceVelocity() {
+    if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
+      this.setVelocityX(this.body.velocity.x / 3);
+      this.setVelocityY(this.body.velocity.y / 3);
+    }
+  }
+
   meleeAttack() {
     this.middleOfAttack = true;
-
-    if (this.body.velocity.x !== 0) {
-      this.setVelocityX(this.body.velocity.x / 3);
-    }
+    this.reduceVelocity();
 
     this.play("lafull-attack1", true);
 
     this.scene.time.delayedCall(380, () => {
+      this.scene.sound.play("lightSaber", { volume: 0.1 });
       new MeleeCollides(this.scene, this.x, this.y);
       this.middleOfAttack = false;
     });
@@ -227,28 +232,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   meleeAttack2() {
     this.middleOfAttack = true;
-
-    if (this.body.velocity.x !== 0) {
-      this.setVelocityX(this.body.velocity.x / 3);
-    }
+    this.reduceVelocity();
 
     this.play("lafull-attack2", true);
 
     this.scene.time.delayedCall(380, () => {
+      this.scene.sound.play("lightSaber", { volume: 0.1 });
       this.middleOfAttack = false;
     });
   }
 
   meleeAttack3() {
     this.middleOfAttack = true;
-
-    if (this.body.velocity.x !== 0) {
-      this.setVelocityX(this.body.velocity.x / 3);
-    }
+    this.reduceVelocity();
 
     this.play("lafull-attack3", true);
 
     this.scene.time.delayedCall(580, () => {
+      this.scene.sound.play("lightSaber", { volume: 0.1 });
       this.middleOfAttack = false;
     });
   }

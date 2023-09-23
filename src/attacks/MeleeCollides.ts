@@ -1,15 +1,15 @@
 class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
   damege: number = 15;
 
-  constructor(scene, x, y) {
+  constructor(scene, x, y, height, width) {
     super(scene, x, y);
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
     this.x += 20;
-    this.displayHeight = 50;
-    this.displayWidth = 50;
+    this.displayHeight = height;
+    this.displayWidth = width;
     this.swing();
   }
 
