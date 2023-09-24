@@ -7,6 +7,8 @@ import Projectiles from "../attacks/Projectiles";
 import MeleeWeapon from "../attacks/MeleeWeapon";
 import MeleeCollides from "../attacks/MeleeCollides";
 
+import anims from "../mixins/anims";
+
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
   private gravity: number = 500;
@@ -27,6 +29,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private middleOfAttack: boolean = false;
   private middleOfCombo: boolean = false;
 
+  // meleeWeapon: MeleeWeapon;
+  meleeCollides: any;
+
   private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
 
@@ -35,6 +40,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     // mixins
     Object.assign(this, collidable);
+    Object.assign(this, anims);
 
     this.init();
     // this.setInput();
@@ -54,13 +60,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.projectiles = new Projectiles(this.scene);
 
-    this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "lafull-attack1");
+    // this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "lafull-attack1");
 
     this.scene.input.keyboard.on("keydown-Z", () => {
       if ((this.middleOfAttack && this.comboCount <= 1) || this.hasBeenHit) {
         clearTimeout(this.middleOfAttackTimeOutId);
         this.middleOfAttackTimeOutId = setTimeout(() => {
-          console.log("pressing z");
           const ke = new KeyboardEvent("keydown", {
             bubbles: true,
             cancelable: true,
@@ -90,8 +95,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.comboCount = 0;
         this.middleOfCombo = false;
       }, 700);
-
-      // this.meleeWeapon.swing(this);
     });
 
     this.scene.input.keyboard.on("keydown-X", () => {
@@ -168,6 +171,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.jumpCount = 0;
     }
 
+    if (this.isPlayingAnims("lafull-attack2")) {
+      return;
+    }
+
     onFloorValue
       ? this.body.velocity.x !== 0
         ? this.play("lafull-run", true)
@@ -225,7 +232,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.scene.time.delayedCall(380, () => {
       this.scene.sound.play("lightSaber", { volume: 0.1 });
-      new MeleeCollides(this.scene, this.x, this.y);
+      this.meleeCollides = new MeleeCollides(this.scene, this.x, this.y, this);
       this.middleOfAttack = false;
     });
   }
@@ -249,7 +256,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack3", true);
 
     this.scene.time.delayedCall(580, () => {
-      this.scene.sound.play("lightSaber", { volume: 0.1 });
+      this.scene.sound.play("ruruSpecialLaser", { volume: 0.1 });
       this.middleOfAttack = false;
     });
   }

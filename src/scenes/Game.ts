@@ -10,6 +10,8 @@ import Cats from "../groups/Cats";
 
 import cameraMixin from "../mixins/cameraMixin";
 
+import HitProjectile from "../attacks/HitProjectile";
+
 export default class GameScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
@@ -17,7 +19,7 @@ export default class GameScene extends PhaserSceneTool {
 
   constructor(config) {
     super("GameScene");
-    this.config = config
+    this.config = config;
     Object.assign(this, cameraMixin);
   }
 
@@ -41,6 +43,7 @@ export default class GameScene extends PhaserSceneTool {
 
     const map = this.make.tilemap({ key: "map" });
     const tileset1 = map.addTilesetImage("main_lev_build_1", "tiles-1");
+    const tileset2 = map.addTilesetImage("hee_tree", "hee_tree");
 
     this.colliderLayer = map.createLayer("collidersLayer", tileset1!, 0, 0);
     map.createLayer("moss", tileset1!, 0, 0);
@@ -76,11 +79,23 @@ export default class GameScene extends PhaserSceneTool {
     this.createCatSpawns(map.getObjectLayer("cats"));
 
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
-    enemiesGroup.addCollider(this.player, this.onPlayerCollision);
     enemiesGroup.addCollider(this.colliderLayer);
+    enemiesGroup.addCollider(this.player, this.onPlayerCollision);
+    enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
+
+    // enemiesGroup.addCollider(this.player.meleeCollides, this.onMeleeWeaponHit);
   }
 
-  onPlayerCollision(enemy: BirdMan, player: Player){
+  onWeaponHit(entity, source) {
+    new HitProjectile(this.scene, entity.x, entity.y);
+    entity.takesHit(source);
+  }
+
+  onMeleeWeaponHit(entity, source) {
+    console.log(`melee hit ${JSON.stringify(entity)} ${JSON.stringify(source)}}`);
+  }
+
+  onPlayerCollision(enemy: BirdMan, player: Player) {
     player.takesHit();
   }
 
@@ -124,7 +139,7 @@ export default class GameScene extends PhaserSceneTool {
         spawnPoint.y
       );
       enemy.setPlatformColliders(this.colliderLayer);
-      enemy.setPlayer(this.player)
+      enemy.setPlayer(this.player);
       enemies.add(enemy);
     });
 

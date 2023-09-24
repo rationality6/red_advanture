@@ -1,7 +1,10 @@
 class Projectile extends Phaser.Physics.Arcade.Sprite {
   private speed: number = 300;
-  private maxDistance = 200;
+  private maxDistance = 300;
   private traveledDistance = 0;
+  private cooldown = 2000;
+
+  damage: number = 95;
 
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
@@ -29,17 +32,25 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     if (this.isOutOfRange()) {
       this.body?.reset(-50, -50);
-      this.setActive(false);
-      this.setVisible(false);
+      this.activateProjectile(false);
       this.traveledDistance = 0;
     }
   }
 
   fire(x, y) {
-    this.setActive(true);
-    this.setVisible(true);
+    this.activateProjectile(true);
     this.body?.reset(x, y);
     this.setVelocityX(this.speed);
+  }
+
+  deliversHit(target) {
+    this.activateProjectile(false);
+    this.traveledDistance = 0;
+  }
+
+  activateProjectile(isActive) {
+    this.setActive(isActive);
+    this.setVisible(isActive);
   }
 
   isOutOfRange() {

@@ -36,6 +36,11 @@ class Preload extends PhaserSceneTool {
       frameWidth: 38,
       frameHeight: 38,
     });
+    
+    this.load.spritesheet("hitParticle", "assets/effect/bubble_effect.png", {
+      frameWidth: 50,
+      frameHeight: 50,
+    });
 
     this.load.spritesheet("lafull-idle", "assets/lafull/idle.png", {
       frameWidth: 162,
@@ -73,6 +78,8 @@ class Preload extends PhaserSceneTool {
       spacing: 32,
     });
 
+    this.load.audio("missed", "assets/sounds/missed.mp3");
+    this.load.audio("ruruSpecialLaser", "assets/sounds/ruru_special_laser.mp3");
     this.load.audio("lightSaber", "assets/sounds/light_saber.mp3");
     this.load.audio("bgSoundSuperShy", "assets/sounds/super_shy.mp3");
     this.load.audio("jumpSound", "assets/sounds/jump.mp3");

@@ -58,4 +58,14 @@ export default (anims) => {
     frameRate: 10,
     repeat: 0,
   });
+
+  anims.create({
+    key: "hitParticle",
+    frames: anims.generateFrameNumbers("hitParticle", {
+      start: 0,
+      end: 3,
+    }),
+    frameRate: 10,
+    repeat: 0,
+  });
 };

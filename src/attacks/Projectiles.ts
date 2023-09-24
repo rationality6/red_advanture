@@ -1,11 +1,15 @@
+import { getTimestamp } from "../utils/functions";
+
 import Projectile from "./Projectile";
 
 class Projectiles extends Phaser.Physics.Arcade.Group {
+  timeFromLastProjectile = null;
+
   constructor(scene) {
     super(scene.physics.world, scene);
 
     this.createMultiple({
-      frameQuantity: 1,
+      frameQuantity: 5,
       active: false,
       visible: false,
       key: "fireball",
@@ -20,8 +24,16 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
       return;
     }
 
+    if (
+      this.timeFromLastProjectile &&
+      projectile.cooldown + this.timeFromLastProjectile > getTimestamp()
+    ) {
+      this.scene.sound.play("missed", { volume: 0.5 });
+      return;
+    }
+
     const center = initiator.getCenter();
-    let centerX
+    let centerX;
 
     if (initiator.lastDirection === Phaser.Physics.Arcade.FACING_RIGHT) {
       projectile.speed = Math.abs(projectile.speed);
@@ -33,7 +45,9 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
       centerX = center.x - 20;
     }
 
-    projectile.fire(centerX, initiator.y);
+    initiator.play("lafull-attack2", true);
+    projectile.fire(centerX, center.y);
+    this.timeFromLastProjectile = getTimestamp();
   }
 }
 

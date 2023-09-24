@@ -79,8 +79,20 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   setPlatformColliders(platformCollidersLayer) {
     this.platformCollidersLayer = platformCollidersLayer;
   }
+
   setPlayer(player) {
     this.player = player;
+  }
+
+  takesHit(source) {
+    this.health -= source.damage;
+
+    source.deliversHit(this);
+    source.body.reset(-50, -50);
+
+    if (this.health <= 0) {
+      this.disableBody(true, true);
+    }
   }
 }
 
