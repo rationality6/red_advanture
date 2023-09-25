@@ -58,6 +58,15 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time, delta) {
+    if(this.getBounds().bottom > this.scene.physics.world.bounds.bottom) {
+      this.scene.events.removeListener(Phaser.Scenes.Events.UPDATE, this.update, this);
+      this.setActive(false);
+      this.rayGraphics.clear();
+      this.frontRayGraphics.clear();
+      this.destroy();
+      return
+    }
+
     const { ray, hasHit } = this.raycast(
       this.body,
       this.platformCollidersLayer,
@@ -77,6 +86,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.frontRaycast(this.player, this.body);
+
+
   }
 
   setPlatformColliders(platformCollidersLayer) {
@@ -94,7 +105,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     source.body.reset(-50, -50);
 
     if (this.health <= 0) {
-      this.disableBody(true, true);
+      this.setVelocity(0, -200);
+      this.setTint(0xff0000);
+      this.body.checkCollision.none = true;
+      this.setCollideWorldBounds(false);
     }
   }
 }

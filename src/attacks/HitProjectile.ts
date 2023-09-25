@@ -8,7 +8,7 @@ class HitProjectile extends Phaser.Physics.Arcade.Sprite {
     this.effectName = "hitParticle";
 
     this.play("hitParticle");
-    this.setScale(2);
+    this.setScale(1);
 
     this.on(
       "animationcomplete",
