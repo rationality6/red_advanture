@@ -5,6 +5,9 @@ class CatLaying extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+
+    this.setSize(10, 10);
+
     this.init();
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }

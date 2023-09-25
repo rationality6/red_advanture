@@ -22,6 +22,8 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
       repeat: -1,
     });
 
+    this.setSize(10, 10);
+
     this.play("fireball");
   }
 

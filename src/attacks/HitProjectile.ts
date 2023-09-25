@@ -5,13 +5,22 @@ class HitProjectile extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+    this.effectName = "hitParticle";
+
     this.play("hitParticle");
     this.setScale(2);
 
-    setTimeout(() => {
-      this.destroy();
-    }, 500);
-  }
+    this.on(
+      "animationcomplete",
+      (animation) => {
+        if (animation.key === this.effectName) {
+          this.destroy();
+        }
+      },
+      this
+    );
+  } 
+
 }
 
 export default HitProjectile;

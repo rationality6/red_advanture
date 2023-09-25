@@ -83,16 +83,18 @@ export default class GameScene extends PhaserSceneTool {
     enemiesGroup.addCollider(this.player, this.onPlayerCollision);
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
 
-    // enemiesGroup.addCollider(this.player.meleeCollides, this.onMeleeWeaponHit);
+    // enemiesGroup.add(this.player.meleeCollides, this.onMeleeWeaponHit);
   }
 
   onWeaponHit(entity, source) {
-    new HitProjectile(this.scene, entity.x, entity.y);
+    new HitProjectile(this.scene, source.x, source.y);
     entity.takesHit(source);
   }
 
   onMeleeWeaponHit(entity, source) {
-    console.log(`melee hit ${JSON.stringify(entity)} ${JSON.stringify(source)}}`);
+    new HitProjectile(this.scene, source.x, source.y);
+    console.log("hit")
+    // console.log(`melee hit ${JSON.stringify(entity)} ${JSON.stringify(source)}}`);
   }
 
   onPlayerCollision(enemy: BirdMan, player: Player) {

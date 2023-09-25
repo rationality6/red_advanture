@@ -9,6 +9,11 @@ class Birdman extends Enemy {
     super.update(time, delta);
     this.play("birdman-idle", true);
   }
+
+  takeHit(source){
+    super.takeHit(source);
+    this.play("birdman-hit", true);
+  }
 }
 
 export default Birdman;

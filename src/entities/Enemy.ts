@@ -1,6 +1,8 @@
 import collidable from "../mixins/collidable";
 import initAnims from "./anims/enemyAnims";
 
+import anims from "../mixins/anims";
+
 class Enemy extends Phaser.Physics.Arcade.Sprite {
   private gravity: number = 0;
   private speed!: number;
@@ -17,6 +19,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
 
     Object.assign(this, collidable);
+    Object.assign(this, anims);
 
     this.config = scene.config;
 
@@ -42,8 +45,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
 
-    this.setSize(25, 45);
-    this.setOffset(5, 20);
+    this.setSize(10, 35);
+    this.setOffset(11, 30);
     this.setVelocityX(this.speed);
 
     this.frontRayGraphics = this.scene.add.graphics({
