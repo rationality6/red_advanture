@@ -17,6 +17,8 @@ export default class GameScene extends PhaserSceneTool {
   private bgStarted = false;
   player: Player;
 
+  background: Phaser.GameObjects.TileSprite;
+
   constructor(config) {
     super("GameScene");
     this.config = config;
@@ -50,6 +52,11 @@ export default class GameScene extends PhaserSceneTool {
     const mapFieldLayer = map.createLayer("field", tileset1!, 0, 0);
     map.createLayer("trees", tileset1!, 0, 0);
     map.createLayer("leafs", tileset1!, 0, 0);
+
+    this.background = this.add
+      .tileSprite(0, 0, this.gameHeight, this.gameWidth - 10, "sky")
+      .setDepth(-1)
+      .setScale(4);
 
     this.add.image(150, 298, "hee_tree").setOrigin(0, 0);
     this.add.image(70, 296, "hee_tree").setOrigin(0, 0);
@@ -93,7 +100,7 @@ export default class GameScene extends PhaserSceneTool {
 
   onMeleeWeaponHit(entity, source) {
     new HitProjectile(this.scene, source.x, source.y);
-    console.log("hit")
+    console.log("hit");
     // console.log(`melee hit ${JSON.stringify(entity)} ${JSON.stringify(source)}}`);
   }
 
@@ -166,5 +173,7 @@ export default class GameScene extends PhaserSceneTool {
     });
   }
 
-  update(time: number, delta: number): void {}
+  update(time: number, delta: number): void {
+    this.background.tilePositionX -= 0.1;
+  }
 }
