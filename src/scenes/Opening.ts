@@ -42,6 +42,28 @@ class OpeningScene extends PhaserSceneTool {
 
     // "Click to start game"
 
+    this.skipText = this.add
+      .text(this.gameWidth, this.gameHeight, "Skip", {
+        fontFamily: "Nanum Gothic",
+        fontSize: "25px",
+      })
+      .setOrigin(1.5, 1.5);
+
+    this.skipText.setInteractive();
+
+    this.tweens.add({
+      targets: this.skipText,
+      alpha: { from: 0.8, to: 0.3 },
+      ease: "Sine.InOut",
+      duration: 2000,
+      yoyo: true,
+      repeat: -1,
+    });
+
+    this.skipText.on("pointerdown", (pointer) => {
+      this.startGame()
+    });
+
     this.input.on("pointerdown", async (pointer) => {
       if (this.clickLock) {
         return;
