@@ -95,6 +95,7 @@ class Preload extends PhaserSceneTool {
     this.load.audio("jumpSound", "assets/sounds/jump.mp3");
     this.load.audio("meow", "assets/sounds/meow.mp3");
     this.load.audio("silorMoon", "assets/sounds/silor_moon.mp3");
+    this.load.audio("opening", "assets/sounds/opening_bgm.mp3");
   }
 
   loadLoadingScreen() {
@@ -161,11 +162,9 @@ class Preload extends PhaserSceneTool {
   async create() {
     this.cameras.main.fadeIn(1000, 255, 255, 255);
 
-    const logo = this.add.image(
-      this.gameWidth / 2 - 10,
-      this.gameHeight / 2 + 20,
-      "interpretLogoWithCat"
-    );
+    const logo = this.add
+      .image(this.gameWidth / 2, this.gameHeight / 2, "interpretLogoWithCat")
+      .setOrigin(0.5, 0.5);
 
     const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
     await this.setDelay(logoExposeSetting);
