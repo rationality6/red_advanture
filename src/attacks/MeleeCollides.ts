@@ -10,10 +10,12 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     this.initiator = initiator;
     this.displayHeight = height;
     this.displayWidth = width;
-    this.swing();
   }
 
-  async swing() {
+  async swing(x, y) {
+    this.x = x;
+    this.y = y;
+
     const center = this.initiator.getCenter();
 
     if (this.initiator.lastDirection === Phaser.Physics.Arcade.FACING_RIGHT) {
@@ -25,12 +27,16 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     this.activeteWeapon(true);
     await this.scene.setDelay(100);
     this.activeteWeapon(false);
-    this.destroy();
+    this.body?.reset(0, 0);
+  }
+
+  deliversHit(target) {
+    this.setActive(false);
+    this.body?.reset(0, 0);
   }
 
   activeteWeapon(isActive) {
-    this.setActive(isActive);
-    this.setVisible(isActive);
+    this.setActive(false);
   }
 }
 

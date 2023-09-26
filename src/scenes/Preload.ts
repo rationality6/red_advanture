@@ -8,6 +8,14 @@ class Preload extends PhaserSceneTool {
   preload() {
     this.loadLoadingScreen();
 
+    const config = {
+      google: {
+        families: ["Nanum Gothic"],
+      },
+    };
+
+    this.load.rexWebFont(config);
+
     this.load.tilemapTiledJSON("map", "assets/level1.tmj");
     this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
 
@@ -17,7 +25,7 @@ class Preload extends PhaserSceneTool {
     this.load.image("hee_tree", "assets/hee_tree.png");
 
     this.load.image("sky", "assets/ms3-sky.png");
-    
+
     this.load.spritesheet("fireball", "assets/player/fire_ball.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -38,7 +46,7 @@ class Preload extends PhaserSceneTool {
       frameWidth: 38,
       frameHeight: 38,
     });
-    
+
     this.load.spritesheet("hitParticle", "assets/effect/bubble_effect.png", {
       frameWidth: 50,
       frameHeight: 50,
@@ -161,7 +169,7 @@ class Preload extends PhaserSceneTool {
 
     const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
     await this.setDelay(logoExposeSetting);
-    this.scene.start("GameScene");
+    this.scene.start("OpeningScene");
   }
 }
 

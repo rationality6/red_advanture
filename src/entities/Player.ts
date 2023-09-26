@@ -4,7 +4,6 @@ import collidable from "../mixins/collidable";
 
 import Projectiles from "../attacks/Projectiles";
 
-import MeleeWeapon from "../attacks/MeleeWeapon";
 import MeleeCollides from "../attacks/MeleeCollides";
 
 import anims from "../mixins/anims";
@@ -60,8 +59,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.projectiles = new Projectiles(this.scene);
 
-    // this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "lafull-attack1");
-
     this.scene.input.keyboard.on("keydown-Z", () => {
       if ((this.middleOfAttack && this.comboCount <= 1) || this.hasBeenHit) {
         clearTimeout(this.middleOfAttackTimeOutId);
@@ -100,6 +97,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.input.keyboard.on("keydown-X", () => {
       this.projectiles.fireProjectile(this);
     });
+
+    this.meleeCollides = new MeleeCollides(this.scene, 0, 0, this);
   }
 
   setInput() {
@@ -231,8 +230,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack1", true);
 
     this.scene.time.delayedCall(380, () => {
+      this.meleeCollides.swing(this.x,this.y);
       this.scene.sound.play("lightSaber", { volume: 0.1 });
-      this.meleeCollides = new MeleeCollides(this.scene, this.x, this.y, this);
+
       this.middleOfAttack = false;
     });
   }

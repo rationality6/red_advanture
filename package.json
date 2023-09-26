@@ -26,6 +26,7 @@
     "vite": "^4.4.9"
   },
   "dependencies": {
+    "phaser3-rex-plugins": "^1.60.5",
     "ramda": "^0.29.0"
   }
 }

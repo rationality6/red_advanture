@@ -9,6 +9,16 @@ export default {
     );
   },
 
+  addOverlap(otherGameObject, callback) {
+    this.scene.physics.add.overlap(
+      this,
+      otherGameObject,
+      callback,
+      null,
+      this
+    );
+  },
+
   frontRaycast(player, body) {
     const { x, y, width, halfHeight, halfWidth } = body;
 

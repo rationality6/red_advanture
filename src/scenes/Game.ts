@@ -12,7 +12,7 @@ import cameraMixin from "../mixins/cameraMixin";
 
 import HitProjectile from "../attacks/HitProjectile";
 
-export default class GameScene extends PhaserSceneTool {
+class GameScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
   player: Player;
@@ -90,18 +90,12 @@ export default class GameScene extends PhaserSceneTool {
     enemiesGroup.addCollider(this.player, this.onPlayerCollision);
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
 
-    // enemiesGroup.add(this.player.meleeCollides, this.onMeleeWeaponHit);
+    enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
   }
 
   onWeaponHit(entity, source) {
     new HitProjectile(this.scene, source.x, source.y);
     entity.takesHit(source);
-  }
-
-  onMeleeWeaponHit(entity, source) {
-    new HitProjectile(this.scene, source.x, source.y);
-    console.log("hit");
-    // console.log(`melee hit ${JSON.stringify(entity)} ${JSON.stringify(source)}}`);
   }
 
   onPlayerCollision(enemy: BirdMan, player: Player) {
@@ -177,3 +171,5 @@ export default class GameScene extends PhaserSceneTool {
     this.background.tilePositionX -= 0.1;
   }
 }
+
+export default GameScene;
