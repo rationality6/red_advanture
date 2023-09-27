@@ -1,6 +1,8 @@
 import Player from "../entities/Player";
 import PhaserSceneTool from "./PhaserSceneTool";
 
+import VirtualJoystick from "phaser3-rex-plugins/plugins/virtualjoystick.js";
+
 class OpeningScene extends PhaserSceneTool {
   textIndex: number = 0;
   text: string[] = [
@@ -15,6 +17,8 @@ class OpeningScene extends PhaserSceneTool {
     "그것이 너를 파멸로 이끌 것이다.",
   ];
 
+  joyStickInfoText: string
+
   clickLock: boolean = false;
   mainText: Phaser.GameObjects.Text;
   bgmStarted: boolean = false;
@@ -26,7 +30,45 @@ class OpeningScene extends PhaserSceneTool {
 
   init() {}
 
+  dumpJoyStickState() {
+    var cursorKeys = this.joyStick.createCursorKeys();
+    var s = "Key down: ";
+    for (var name in cursorKeys) {
+      if (cursorKeys[name].isDown) {
+        s += `${name} `;
+      }
+    }
+
+    s += `
+Force: ${Math.floor(this.joyStick.force * 100) / 100}
+Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
+`;
+
+    s += "\nTimestamp:\n";
+    for (var name in cursorKeys) {
+      var key = cursorKeys[name];
+      s += `${name}: duration=${key.duration / 1000}\n`;
+    }
+    this.joyStickInfoText.setText(s);
+  }
+
   create() {
+    this.joyStick = this.plugins
+      .get("rexvirtualjoystickplugin")
+      .add(this, {
+        x: 400,
+        y: 300,
+        radius: 100,
+        base: this.add.circle(0, 0, 100, 0x888888),
+        thumb: this.add.circle(0, 0, 50, 0xcccccc),
+        // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+        // forceMin: 16,
+        // enable: true
+      })
+      .on("update", this.dumpJoyStickState, this);
+
+    this.joyStickInfoText = this.add.text(0, 0, "");
+
     this.mainText = this.add
       .text(
         this.gameWidth / 2,
@@ -60,7 +102,7 @@ class OpeningScene extends PhaserSceneTool {
     });
 
     this.skipText.on("pointerdown", (pointer) => {
-      if (!(this.bgmStarted)) {
+      if (!this.bgmStarted) {
         return;
       }
       this.startGame();
@@ -71,7 +113,7 @@ class OpeningScene extends PhaserSceneTool {
         return;
       }
 
-      if (!(this.bgmStarted)) {
+      if (!this.bgmStarted) {
         this.bgmStarted = true;
         this.sound.play("opening", { loop: true });
       }
