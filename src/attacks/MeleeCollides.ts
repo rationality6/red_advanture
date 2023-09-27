@@ -31,8 +31,9 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
   }
 
   deliversHit(target) {
-    this.setActive(false);
-    this.body?.reset(0, 0);
+    // this.setActive(false);
+    // this.body?.reset(0, 0);
+    this.body.checkCollision.none = true;
   }
 
   activeteWeapon(isActive) {

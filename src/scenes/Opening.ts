@@ -5,7 +5,6 @@ class OpeningScene extends PhaserSceneTool {
   textIndex: number = 0;
   text: string[] = [
     "아무것도 보이지 않는다",
-    "어둠…",
     "어둠이 다시 찾아온다.",
     "…",
     "때로는 어둠 속에서 빛을 찾지 못해 후회만 가득할 때가 있다.",
@@ -61,7 +60,10 @@ class OpeningScene extends PhaserSceneTool {
     });
 
     this.skipText.on("pointerdown", (pointer) => {
-      this.startGame()
+      if (!(this.bgmStarted)) {
+        return;
+      }
+      this.startGame();
     });
 
     this.input.on("pointerdown", async (pointer) => {
@@ -69,7 +71,7 @@ class OpeningScene extends PhaserSceneTool {
         return;
       }
 
-      if (!this.bgmStarted) {
+      if (!(this.bgmStarted)) {
         this.bgmStarted = true;
         this.sound.play("opening", { loop: true });
       }
