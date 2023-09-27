@@ -11,7 +11,7 @@ new Phaser.Game(
   Object.assign(config, {
     scene: [
       PreloadLogo,
-      Preload,
+      new Preload(config),
       OpeningScene,
       new GameScene(config),
       EndScene,

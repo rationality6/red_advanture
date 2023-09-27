@@ -1,11 +1,16 @@
 import PhaserSceneTool from "./PhaserSceneTool";
 
 class Preload extends PhaserSceneTool {
-  constructor() {
+  constructor(config) {
     super("PreloadScene");
+    this.config = config;
   }
 
   preload() {
+    let url =
+      "https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js";
+    this.load.plugin("rexvirtualjoystickplugin", url, true);
+
     this.loadLoadingScreen();
 
     const config = {
