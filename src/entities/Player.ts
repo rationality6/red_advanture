@@ -134,6 +134,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  moveLeft() {
+    this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
+    this.setVelocityX(-this.moveSpeed);
+    this.setFlipX(true);
+    this.play("lafull-run", true)
+  }
+
+  moveRight() {
+    this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
+    this.setVelocityX(this.moveSpeed);
+    this.setFlipX(false);
+  }
+  moveUp(){
+    this.setVelocityY(-400);
+  }
+
   update() {
     if (this.hasBeenHit) {
       return;
@@ -230,7 +246,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack1", true);
 
     this.scene.time.delayedCall(380, () => {
-      this.meleeCollides.swing(this.x,this.y);
+      this.meleeCollides.swing(this.x, this.y);
       this.scene.sound.play("lightSaber", { volume: 0.1 });
 
       this.middleOfAttack = false;

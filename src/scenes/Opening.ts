@@ -6,18 +6,19 @@ import VirtualJoystick from "phaser3-rex-plugins/plugins/virtualjoystick.js";
 class OpeningScene extends PhaserSceneTool {
   textIndex: number = 0;
   text: string[] = [
-    "아무것도 보이지 않는다",
-    "어둠이 다시 찾아온다.",
-    "…",
-    "때로는 어둠 속에서 빛을 찾지 못해 후회만 가득할 때가 있다.",
     "피와 눈물이 섞인 땅 위에 남긴 상처를 지우려면,",
     "내 목숨이 필요할지도 모른다.",
-    "유다: …",
-    "기드온: 너의 과거는 네가 떠나보내려 해도 떠나지 않는다.",
-    "그것이 너를 파멸로 이끌 것이다.",
+    "레드 어드벤처의 튜토리얼입니다. 뿌잉뿌잉",
+    "이동은 방향키, space 점프, 2단점프",
+    "z 공격, 3연타 공격",
+    "x 파이어볼",
+    "입니다.",
   ];
 
-  joyStickInfoText: string
+  player: Player;
+
+  joyStickInfoText: string;
+  keyDownState: string;
 
   clickLock: boolean = false;
   mainText: Phaser.GameObjects.Text;
@@ -30,14 +31,17 @@ class OpeningScene extends PhaserSceneTool {
 
   init() {}
 
-  dumpJoyStickState() {
+  joyStickState() {
     var cursorKeys = this.joyStick.createCursorKeys();
     var s = "Key down: ";
     for (var name in cursorKeys) {
       if (cursorKeys[name].isDown) {
         s += `${name} `;
+        this.keyDownState = name;
       }
     }
+
+    console.log(this.keyDownState);
 
     s += `
 Force: ${Math.floor(this.joyStick.force * 100) / 100}
@@ -56,8 +60,8 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
     this.joyStick = this.plugins
       .get("rexvirtualjoystickplugin")
       .add(this, {
-        x: 400,
-        y: 300,
+        x: 200,
+        y: 400,
         radius: 100,
         base: this.add.circle(0, 0, 100, 0x888888),
         thumb: this.add.circle(0, 0, 50, 0xcccccc),
@@ -65,7 +69,7 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
         // forceMin: 16,
         // enable: true
       })
-      .on("update", this.dumpJoyStickState, this);
+      .on("update", this.joyStickState, this);
 
     this.joyStickInfoText = this.add.text(0, 0, "");
 
@@ -144,7 +148,7 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
       this.clickLock = false;
     });
 
-    new Player(this, 300, 500).setScale(4);
+    this.player = new Player(this, 300, 500).setScale(4);
   }
 
   startGame() {
@@ -157,6 +161,16 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
 
     if (this.textIndex === 10) {
       this.startGame();
+    }
+
+    if(this.keyDownState == "left"){
+      this.player.moveLeft();
+    }
+    if(this.keyDownState == "right"){
+      this.player.moveRight();
+    }
+    if(this.keyDownState == "up"){
+      this.player.moveUp();
     }
   }
 }
