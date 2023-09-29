@@ -13,6 +13,7 @@ class OpeningScene extends PhaserSceneTool {
     "z 공격, 3연타 공격",
     "x 파이어볼",
     "입니다.",
+    "클릭하면 다음으로 넘어갑니다.",
   ];
 
   player: Player;
@@ -128,11 +129,11 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
         targets: this.mainText,
         alpha: { from: 1, to: 0 },
         ease: "Sine.InOut",
-        duration: 2000,
+        duration: 1000,
         repeat: 0,
       });
 
-      await this.setDelay(2000);
+      await this.setDelay(1000);
 
       this.textIndex += 1;
 
@@ -140,11 +141,11 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
         targets: this.mainText,
         alpha: { from: 0, to: 1 },
         ease: "Sine.InOut",
-        duration: 2000,
+        duration: 1000,
         repeat: 0,
       });
 
-      await this.setDelay(2000);
+      await this.setDelay(1000);
       this.clickLock = false;
     });
 
@@ -159,7 +160,7 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
   update() {
     this.mainText.setText(this.text[this.textIndex]);
 
-    if (this.textIndex === 10) {
+    if (this.textIndex === 8) {
       this.startGame();
     }
 

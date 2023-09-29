@@ -87,7 +87,13 @@ class Preload extends PhaserSceneTool {
       frameHeight: 162,
     });
 
-    this.load.spritesheet("birdman-idle", "assets/enemy/enemy_sheet.png", {
+    this.load.spritesheet("birdman", "assets/enemy/enemy_sheet.png", {
+      frameWidth: 32,
+      frameHeight: 64,
+      spacing: 32,
+    });
+
+    this.load.spritesheet("snaky", "assets/enemy/enemy_sheet_2.png", {
       frameWidth: 32,
       frameHeight: 64,
       spacing: 32,

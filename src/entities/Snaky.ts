@@ -1,9 +1,12 @@
 import Enemy from "./Enemy";
-import initAnims from "./anims/birdmanAnims";
+import initAnims from "./anims/snakyAnims";
 
-class Birdman extends Enemy {
+class Snaky extends Enemy {
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, "birdman");
+    super(scene, x, y, "snaky");
+
+    this.health = 500;
+    this.speed = 10;
 
     initAnims(this.scene.anims);
   }
@@ -15,17 +18,17 @@ class Birdman extends Enemy {
       return;
     }
 
-    if (this.isPlayingAnims("birdman-hurt")) {
+    if (this.isPlayingAnims("snaky-hurt")) {
       return;
     }
 
-    this.play("birdman-idle", true);
+    this.play("snaky-idle", true);
   }
 
   takesHit(source) {
     super.takesHit(source);
-    this.play("birdman-hurt", true);
+    this.play("snaky-hurt", true);
   }
 }
 
-export default Birdman;
+export default Snaky;

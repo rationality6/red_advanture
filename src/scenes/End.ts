@@ -6,6 +6,8 @@ import Player from "../entities/player";
 import CatLaying from "../entities/CatLaying";
 import Cats from "../groups/Cats";
 
+import Enemies from "../groups/Enemies";
+
 import cameraMixin from "../mixins/cameraMixin";
 
 export default class EndScene extends PhaserSceneTool {
@@ -24,6 +26,8 @@ export default class EndScene extends PhaserSceneTool {
 
     this.colliderLayer = map.createLayer("colliderLayer", tileset2, 0, 0);
     map.createLayer("fieldLayer", tileset2!, 0, 0);
+
+    const enemySpawns = map.getObjectLayer("enemys");
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
@@ -45,6 +49,12 @@ export default class EndScene extends PhaserSceneTool {
       this.sound.play("meow");
     });
     
+    const enemiesGroup = this.createEnemySpawns(enemySpawns);
+    enemiesGroup.addCollider(this.colliderLayer);
+    enemiesGroup.addCollider(this.player, this.onPlayerCollision);
+    enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
+
+    enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
   }
 
   getPlayerZones(map: any) {
@@ -63,5 +73,24 @@ export default class EndScene extends PhaserSceneTool {
       console.log("end");
       this.add.image(400, 300, "interpretLogoWithCat");
     });
+  }
+
+
+  createEnemySpawns(spawnLayer) {
+    const enemies = new Enemies(this);
+    const enemyTypes = enemies.getTypes();
+
+    spawnLayer.objects.forEach((spawnPoint) => {
+      const enemy = new enemyTypes[spawnPoint.type](
+        this,
+        spawnPoint.x,
+        spawnPoint.y
+      );
+      enemy.setPlatformColliders(this.colliderLayer);
+      enemy.setPlayer(this.player);
+      enemies.add(enemy);
+    });
+
+    return enemies;
   }
 }

@@ -138,7 +138,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
     this.setVelocityX(-this.moveSpeed);
     this.setFlipX(true);
-    this.play("lafull-run", true)
+    this.play("lafull-run", true);
   }
 
   moveRight() {
@@ -146,7 +146,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setVelocityX(this.moveSpeed);
     this.setFlipX(false);
   }
-  moveUp(){
+  moveUp() {
     this.setVelocityY(-400);
   }
 
@@ -246,7 +246,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack1", true);
 
     this.scene.time.delayedCall(380, () => {
-      this.meleeCollides.swing(this.x, this.y);
+      this.meleeCollides.swing(this.x, this.y, 40, 40);
       this.scene.sound.play("lightSaber", { volume: 0.1 });
 
       this.middleOfAttack = false;
@@ -260,6 +260,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack2", true);
 
     this.scene.time.delayedCall(380, () => {
+      this.meleeCollides.swing(this.x, this.y, 50, 50);
       this.scene.sound.play("lightSaber", { volume: 0.1 });
       this.middleOfAttack = false;
     });
@@ -272,6 +273,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack3", true);
 
     this.scene.time.delayedCall(580, () => {
+      this.meleeCollides.swing(this.x, this.y, 60, 60);
       this.scene.sound.play("ruruSpecialLaser", { volume: 0.1 });
       this.middleOfAttack = false;
     });

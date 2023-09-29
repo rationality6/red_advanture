@@ -12,7 +12,8 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     this.displayWidth = width;
   }
 
-  async swing(x, y) {
+  async swing(x, y, height, width) {
+    this.setSize(width, height)
     this.x = x;
     this.y = y;
 
@@ -27,13 +28,12 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     this.activeteWeapon(true);
     await this.scene.setDelay(100);
     this.activeteWeapon(false);
-    this.body?.reset(0, 0);
+    this.body?.reset(-150, -150);
   }
 
   deliversHit(target) {
-    // this.setActive(false);
-    // this.body?.reset(0, 0);
-    this.body.checkCollision.none = true;
+    this.setActive(false);
+    this.body?.reset(-150, -150);
   }
 
   activeteWeapon(isActive) {

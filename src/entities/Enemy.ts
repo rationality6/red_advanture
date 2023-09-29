@@ -1,5 +1,4 @@
 import collidable from "../mixins/collidable";
-import initAnims from "./anims/enemyAnims";
 
 import anims from "../mixins/anims";
 
@@ -25,7 +24,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.init();
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
-    initAnims(this.scene.anims);
   }
 
   init(): void {
