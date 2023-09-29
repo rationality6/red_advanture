@@ -13,7 +13,7 @@ export default (anims) => {
     key: "snaky-hurt",
     frames: anims.generateFrameNumbers("snaky", {
       start: 21,
-      end: 2,
+      end: 22,
     }),
     frameRate: 10,
     repeat: 0,

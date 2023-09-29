@@ -2,19 +2,23 @@ import Phaser from "phaser";
 import PhaserSceneTool from "./PhaserSceneTool";
 
 import Player from "../entities/player";
-
+import BirdMan from "../entities/BirdMan";
 import CatLaying from "../entities/CatLaying";
 import Cats from "../groups/Cats";
 
 import Enemies from "../groups/Enemies";
 
 import cameraMixin from "../mixins/cameraMixin";
+import HitProjectile from "../attacks/HitProjectile";
+
 
 export default class EndScene extends PhaserSceneTool {
   private colliderLayer: any;
 
-  constructor() {
+  constructor(config) {
     super("EndScene");
+
+    this.config = config;
 
     Object.assign(this, cameraMixin);
   }
@@ -27,7 +31,7 @@ export default class EndScene extends PhaserSceneTool {
     this.colliderLayer = map.createLayer("colliderLayer", tileset2, 0, 0);
     map.createLayer("fieldLayer", tileset2!, 0, 0);
 
-    const enemySpawns = map.getObjectLayer("enemys");
+    const enemySpawns = map.getObjectLayer("enemies");
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
@@ -55,6 +59,15 @@ export default class EndScene extends PhaserSceneTool {
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
 
     enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
+  }
+
+  onWeaponHit(entity, source) {
+    new HitProjectile(this.scene, source.x, source.y);
+    entity.takesHit(source);
+  }
+
+  onPlayerCollision(enemy: BirdMan, player: Player) {
+    player.takesHit();
   }
 
   getPlayerZones(map: any) {

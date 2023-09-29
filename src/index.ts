@@ -14,7 +14,7 @@ new Phaser.Game(
       new Preload(config),
       OpeningScene,
       new GameScene(config),
-      EndScene,
+      new EndScene(config),
     ],
   })
 );
