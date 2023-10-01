@@ -28,7 +28,7 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
       this.timeFromLastProjectile &&
       projectile.cooldown + this.timeFromLastProjectile > getTimestamp()
     ) {
-      this.scene.sound.play("missed", { volume: 0.5 });
+      this.scene.sound.play("missed", { volume: 1 });
       return;
     }
 

@@ -60,7 +60,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.projectiles = new Projectiles(this.scene);
 
     this.scene.input.keyboard.on("keydown-Z", () => {
-      if ((this.middleOfAttack && this.comboCount <= 1) || this.hasBeenHit) {
+      // combo support code for user
+      if ((this.middleOfAttack && this.comboCount <= 2) || this.hasBeenHit) {
         clearTimeout(this.middleOfAttackTimeOutId);
         this.middleOfAttackTimeOutId = setTimeout(() => {
           const ke = new KeyboardEvent("keydown", {
@@ -73,6 +74,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         return;
       }
 
+      if (this.middleOfAttack || this.hasBeenHit) {
+        this.scene.sound.play("missed", { volume: 1 });
+        return;
+      }
+
+      // combination
       if (this.comboCount == 0) {
         this.meleeAttack();
       } else if (this.comboCount == 1) {
@@ -245,7 +252,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.play("lafull-attack1", true);
 
-    this.scene.time.delayedCall(380, () => {
+    this.scene.time.delayedCall(450, () => {
       this.meleeCollides.swing(this.x, this.y, 40, 40);
       this.scene.sound.play("lightSaber", { volume: 0.1 });
 
@@ -259,7 +266,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.play("lafull-attack2", true);
 
-    this.scene.time.delayedCall(380, () => {
+    this.scene.time.delayedCall(450, () => {
       this.meleeCollides.swing(this.x, this.y, 50, 50);
       this.scene.sound.play("lightSaber", { volume: 0.1 });
       this.middleOfAttack = false;
@@ -272,7 +279,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.play("lafull-attack3", true);
 
-    this.scene.time.delayedCall(580, () => {
+    this.scene.time.delayedCall(680, () => {
       this.meleeCollides.swing(this.x, this.y, 60, 60, true);
       this.scene.sound.play("ruruSpecialLaser", { volume: 0.1 });
       this.middleOfAttack = false;
