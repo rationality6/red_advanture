@@ -9,6 +9,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   private platformCollidersLayer;
   private timeFromLastTurn: number;
 
+  hasBeenHit: boolean = false;
+
   private player!: Phaser.Physics.Arcade.Sprite;
 
   constructor(scene: Phaser.Scene, x: number, y: number, key: string) {
@@ -29,7 +31,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   init(): void {
     this.gravity = 500;
     this.speed = 20;
-    this.health = 100;
+    this.health = 200;
     this.rayGraphics = this.scene.add.graphics({
       lineStyle: {
         width: 2,
@@ -56,13 +58,21 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time, delta) {
-    if(this.getBounds().bottom > this.scene.physics.world.bounds.bottom) {
-      this.scene.events.removeListener(Phaser.Scenes.Events.UPDATE, this.update, this);
+    if (this.hasBeenHit) {
+      return;
+    }
+
+    if (this.getBounds().bottom > this.scene.physics.world.bounds.bottom) {
+      this.scene.events.removeListener(
+        Phaser.Scenes.Events.UPDATE,
+        this.update,
+        this
+      );
       this.setActive(false);
       this.rayGraphics.clear();
       this.frontRayGraphics.clear();
       this.destroy();
-      return
+      return;
     }
 
     const { ray, hasHit } = this.raycast(
@@ -84,8 +94,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.frontRaycast(this.player, this.body);
-
-
   }
 
   setPlatformColliders(platformCollidersLayer) {
@@ -97,6 +105,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   takesHit(source) {
+    this.hasBeenHit = true;
     this.health -= source.damage;
 
     source.deliversHit(this);
@@ -108,6 +117,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.body.checkCollision.none = true;
       this.setCollideWorldBounds(false);
     }
+
+    setTimeout(() => {
+      this.hasBeenHit = false
+    }, 1000)
   }
 }
 

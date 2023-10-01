@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import WebFontLoaderPlugin from "phaser3-rex-plugins/plugins/webfontloader-plugin.js";
 
 const SHARED_CONFIG = {
-  debug: true,
+  debug: false,
 };
 
 export default {

@@ -1,6 +1,7 @@
 class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
   damage: number = 15;
   initiator: any;
+  knuckBack: boolean;
 
   constructor(scene, x, y, initiator, height = 50, width = 50) {
     super(scene, x, y, "meleeColides");
@@ -12,10 +13,12 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     this.displayWidth = width;
   }
 
-  async swing(x, y, height, width) {
-    this.setSize(width, height)
+  async swing(x, y, height, width, knuckBack = false) {
+    this.setSize(width, height);
     this.x = x;
     this.y = y;
+
+    this.knuckBack = knuckBack;
 
     const center = this.initiator.getCenter();
 
@@ -33,6 +36,15 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
 
   deliversHit(target) {
     this.setActive(false);
+
+    if (this.knuckBack) {
+      const randomVelocityY = Math.random() * -200 - 230;
+      const randomLeftOrRight = Math.random() > 0.5 ? 1 : -1;
+      const randomVelocityX = Math.random() * 100 * randomLeftOrRight;
+      target.setVelocityY(randomVelocityY);
+      target.setVelocityX(randomVelocityX);
+    }
+
     this.body?.reset(-150, -150);
   }
 

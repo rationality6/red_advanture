@@ -273,7 +273,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack3", true);
 
     this.scene.time.delayedCall(580, () => {
-      this.meleeCollides.swing(this.x, this.y, 60, 60);
+      this.meleeCollides.swing(this.x, this.y, 60, 60, true);
       this.scene.sound.play("ruruSpecialLaser", { volume: 0.1 });
       this.middleOfAttack = false;
     });

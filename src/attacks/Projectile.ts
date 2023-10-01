@@ -5,6 +5,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   private cooldown = 2000;
 
   damage: number = 95;
+  direction: string = "right";
 
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
@@ -39,15 +40,25 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  fire(x, y) {
+  fire(x, y, direction) {
+    this.direction = direction;
     this.activateProjectile(true);
     this.body?.reset(x, y);
     this.setVelocityX(this.speed);
   }
 
-  deliversHit(target) {
+  async deliversHit(target) {
     this.activateProjectile(false);
     this.traveledDistance = 0;
+
+    const randomVelocityY = Math.random() * 300 + 150;
+    const randomVelocityX = Math.random() * 500 + 300;
+
+    if (this.direction === "right") {
+      target.setVelocity(randomVelocityX, -randomVelocityY);
+    } else {
+      target.setVelocity(-randomVelocityX, -randomVelocityY);
+    }
   }
 
   activateProjectile(isActive) {

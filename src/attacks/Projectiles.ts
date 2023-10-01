@@ -46,7 +46,9 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
     }
 
     initiator.play("lafull-attack2", true);
-    projectile.fire(centerX, center.y);
+
+    const playerLastDirection = Phaser.Physics.Arcade.FACING_RIGHT === initiator.lastDirection ? "right" : "left";
+    projectile.fire(centerX, center.y, playerLastDirection);
     this.timeFromLastProjectile = getTimestamp();
   }
 }

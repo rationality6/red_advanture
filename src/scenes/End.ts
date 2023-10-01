@@ -40,6 +40,11 @@ export default class EndScene extends PhaserSceneTool {
 
     const back = this.getPlayerZones(map).back;
 
+    this.background = this.add
+    .tileSprite(0, 0,this.gameWidth ,this.gameHeight , "sky2")
+    .setDepth(-1)
+    .setOrigin(0,0)
+
     this.createEndOfLevel(this.player, back)
 
     this.setupFollowupCameraOn(this.player)
@@ -105,5 +110,8 @@ export default class EndScene extends PhaserSceneTool {
     });
 
     return enemies;
+  }
+  update(time: number, delta: number): void {
+
   }
 }

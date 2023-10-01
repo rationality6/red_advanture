@@ -30,6 +30,7 @@ class Preload extends PhaserSceneTool {
     this.load.image("hee_tree", "assets/hee_tree.png");
 
     this.load.image("sky", "assets/ms3-sky.png");
+    this.load.image("sky2", "assets/bg_map2.png");
 
     this.load.spritesheet("fireball", "assets/player/fire_ball.png", {
       frameWidth: 32,
