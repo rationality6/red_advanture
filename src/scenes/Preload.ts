@@ -23,9 +23,11 @@ class Preload extends PhaserSceneTool {
 
     this.load.tilemapTiledJSON("map", "assets/level1.tmj");
     this.load.tilemapTiledJSON("map2", "assets/level2.tmj");
+    this.load.tilemapTiledJSON("map-green", "assets/green.tmj");
 
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
     this.load.image("tiles-2", "assets/main_lev_build_2.png");
+    this.load.image("green-tile", "assets/country-platform-tileset.png");
 
     this.load.image("hee_tree", "assets/hee_tree.png");
 
@@ -180,7 +182,8 @@ class Preload extends PhaserSceneTool {
 
     const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
     await this.setDelay(logoExposeSetting);
-    this.scene.start("OpeningScene");
+    this.scene.start("GreenScene");
+    // this.scene.start("OpeningScene");
     // this.scene.start("EndScene");
   }
 }
