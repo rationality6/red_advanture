@@ -182,8 +182,8 @@ class Preload extends PhaserSceneTool {
 
     const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
     await this.setDelay(logoExposeSetting);
-    this.scene.start("GreenScene");
-    // this.scene.start("OpeningScene");
+    this.scene.start("OpeningScene");
+    // this.scene.start("GreenScene");
     // this.scene.start("EndScene");
   }
 }

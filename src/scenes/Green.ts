@@ -9,6 +9,7 @@ import Enemies from "../groups/Enemies";
 import Cats from "../groups/Cats";
 
 import cameraMixin from "../mixins/cameraMixin";
+import minimapMixin from "../mixins/minimapMixin";
 
 import HitProjectile from "../attacks/HitProjectile";
 
@@ -23,6 +24,7 @@ class GreenScene extends PhaserSceneTool {
     super("GreenScene");
     this.config = config;
     Object.assign(this, cameraMixin);
+    Object.assign(this, minimapMixin);
   }
 
   create() {
@@ -48,7 +50,8 @@ class GreenScene extends PhaserSceneTool {
     this.player.addCollider(this.colliderLayer);
 
     this.setupFollowupCameraOn(this.player);
-
+    this.setMiniMap();
+    
     this.anims.create({
       key: "catLaying",
       frames: this.anims.generateFrameNumbers("catLaying", {

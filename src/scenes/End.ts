@@ -9,6 +9,8 @@ import Cats from "../groups/Cats";
 import Enemies from "../groups/Enemies";
 
 import cameraMixin from "../mixins/cameraMixin";
+import minimapMixin from "../mixins/minimapMixin";
+
 import HitProjectile from "../attacks/HitProjectile";
 
 
@@ -21,6 +23,7 @@ export default class EndScene extends PhaserSceneTool {
     this.config = config;
 
     Object.assign(this, cameraMixin);
+    Object.assign(this, minimapMixin);
   }
 
   create() {
@@ -48,7 +51,8 @@ export default class EndScene extends PhaserSceneTool {
     this.createEndOfLevel(this.player, back)
 
     this.setupFollowupCameraOn(this.player)
-
+    this.setMiniMap();
+    
     const catGroup = new Cats(this);
     const cat1 = new CatLaying(this, 270, 365);
     catGroup.add(cat1);
