@@ -28,7 +28,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private middleOfAttack: boolean = false;
   private middleOfCombo: boolean = false;
 
-  // meleeWeapon: MeleeWeapon;
   meleeCollides: any;
 
   private constructor(scene: any, x: number, y: number, key: string) {
@@ -280,6 +279,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.play("lafull-attack3", true);
 
     this.scene.time.delayedCall(680, () => {
+      this.meleeCollides.damage = 30;
       this.meleeCollides.swing(this.x, this.y, 60, 60, true);
       this.scene.sound.play("ruruSpecialLaser", { volume: 0.1 });
       this.middleOfAttack = false;

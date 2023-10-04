@@ -4,7 +4,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   private traveledDistance = 0;
   private cooldown = 2000;
 
-  damage: number = 95;
+  damage: number = 85;
   direction: string = "right";
 
   constructor(scene, x, y, key) {

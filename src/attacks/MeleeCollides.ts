@@ -38,6 +38,7 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     this.setActive(false);
 
     if (this.knuckBack) {
+      this.damage = 30
       const randomVelocityY = Math.random() * -200 - 230;
       const randomLeftOrRight = Math.random() > 0.5 ? 1 : -1;
       const randomVelocityX = Math.random() * 100 * randomLeftOrRight;
@@ -46,6 +47,7 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.body?.reset(-150, -150);
+    this.damage = 15
   }
 
   activeteWeapon(isActive) {

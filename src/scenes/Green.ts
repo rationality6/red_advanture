@@ -51,16 +51,6 @@ class GreenScene extends PhaserSceneTool {
 
     this.setupFollowupCameraOn(this.player);
     this.setMiniMap();
-    
-    this.anims.create({
-      key: "catLaying",
-      frames: this.anims.generateFrameNumbers("catLaying", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
 
     this.createCatSpawns(map.getObjectLayer("cats"));
 
