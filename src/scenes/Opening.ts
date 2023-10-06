@@ -58,21 +58,21 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
   }
 
   create() {
-    this.joyStick = this.plugins
-      .get("rexvirtualjoystickplugin")
-      .add(this, {
-        x: 200,
-        y: 400,
-        radius: 100,
-        base: this.add.circle(0, 0, 100, 0x888888),
-        thumb: this.add.circle(0, 0, 50, 0xcccccc),
-        // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-        // forceMin: 16,
-        // enable: true
-      })
-      .on("update", this.joyStickState, this);
+    // this.joyStick = this.plugins
+    //   .get("rexvirtualjoystickplugin")
+    //   .add(this, {
+    //     x: 200,
+    //     y: 400,
+    //     radius: 100,
+    //     base: this.add.circle(0, 0, 100, 0x888888),
+    //     thumb: this.add.circle(0, 0, 50, 0xcccccc),
+    //     // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+    //     // forceMin: 16,
+    //     // enable: true
+    //   })
+    //   .on("update", this.joyStickState, this);
 
-    this.joyStickInfoText = this.add.text(0, 0, "");
+    // this.joyStickInfoText = this.add.text(0, 0, "");
 
     this.mainText = this.add
       .text(
@@ -149,7 +149,7 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
       this.clickLock = false;
     });
 
-    this.player = new Player(this, 300, 500).setScale(4);
+    this.player = new Player(this, 300, 500).setScale(1);
   }
 
   startGame() {

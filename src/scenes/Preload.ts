@@ -102,6 +102,11 @@ class Preload extends PhaserSceneTool {
       spacing: 32,
     });
 
+    this.load.spritesheet("dashDust", "assets/effect/dash_dust.png", {
+      frameWidth: 90,
+      frameHeight: 68,
+    });
+
     this.load.audio("missed", "assets/sounds/missed.mp3");
     this.load.audio("ruruSpecialLaser", "assets/sounds/ruru_special_laser.mp3");
     this.load.audio("lightSaber", "assets/sounds/light_saber.mp3");

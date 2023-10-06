@@ -38,4 +38,14 @@ export default (anims) => {
     frameRate: 3,
     repeat: 1,
   });
+
+  anims.create({
+    key: "dashDust",
+    frames: anims.generateFrameNumbers("dashDust", {
+      start: 0,
+      end: 9,
+    }),
+    frameRate: 10,
+    repeat: 0,
+  });
 };

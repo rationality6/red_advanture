@@ -1,7 +1,4 @@
 export default {
-  constructor() {
-    this.setMiniMap();
-  },
   setMiniMap() {
     this.minimap = this.cameras
       .add(400, 5, 400, 100)

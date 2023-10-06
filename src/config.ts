@@ -22,7 +22,6 @@ export default {
       debug: SHARED_CONFIG.debug,
     },
   },
-
   plugins: {
     global: [
       {

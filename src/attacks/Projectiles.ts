@@ -9,7 +9,7 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
     super(scene.physics.world, scene);
 
     this.createMultiple({
-      frameQuantity: 5,
+      frameQuantity: 1,
       active: false,
       visible: false,
       key: "fireball",
@@ -38,11 +38,11 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
     if (initiator.lastDirection === Phaser.Physics.Arcade.FACING_RIGHT) {
       projectile.speed = Math.abs(projectile.speed);
       projectile.setFlipX(false);
-      centerX = center.x + 20;
+      centerX = center.x + 10;
     } else {
       projectile.speed = -Math.abs(projectile.speed);
       projectile.setFlipX(true);
-      centerX = center.x - 20;
+      centerX = center.x - 10;
     }
 
     initiator.play("lafull-attack2", true);

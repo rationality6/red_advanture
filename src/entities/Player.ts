@@ -6,6 +6,8 @@ import Projectiles from "../attacks/Projectiles";
 
 import MeleeCollides from "../attacks/MeleeCollides";
 
+import DashDust from "../attacks/DashDust";
+
 import anims from "../mixins/anims";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -29,6 +31,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private middleOfCombo: boolean = false;
 
   meleeCollides: any;
+
+  middleOfDashAnimation: boolean = false;
 
   private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
@@ -178,13 +182,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
       this.setVelocityX(-this.moveSpeed);
       this.setFlipX(true);
+      
     } else if (right.isDown) {
       this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
       this.setVelocityX(this.moveSpeed);
       this.setFlipX(false);
+      
     } else {
       this.setVelocityX(0);
     }
+
 
     this.jumpCheck(isSpaceJustDown, isUpJustDown, onFloorValue);
 
