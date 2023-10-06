@@ -11,9 +11,13 @@ export default {
 
     this.cameras.main.rotation -= 0.50
 
+    this.cameras3 = this.cameras.add(600, 0, 600, 600).setZoom(1.8);
+    this.cameras3.setBounds(0, 0, 1200, 600)
+    this.cameras3.startFollow(player, false, 0.5, -0.5);
+
     this.cameras2 = this.cameras.add(500, 0, 200, 200).setZoom(1.8);
     this.cameras2.setBounds(0, 0, 1200, 600)
-    this.cameras2.startFollow(player, false, 0.5, -0.5);
+    this.cameras2.startFollow(player, false, 0.5, -0.5)
   },
 
 };

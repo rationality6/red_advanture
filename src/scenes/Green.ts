@@ -13,6 +13,8 @@ import minimapMixin from "../mixins/minimapMixin";
 
 import HitProjectile from "../attacks/HitProjectile";
 
+import PlasmaPost2FX from "../pipeline/PlasmaPost2FX";
+
 class GreenScene extends PhaserSceneTool {
   colliderLayer: any;
   private bgStarted = false;
@@ -49,7 +51,7 @@ class GreenScene extends PhaserSceneTool {
 
     this.player.addCollider(this.colliderLayer);
 
-    this.setupFollowupCameraOn(this.player);
+    this.setupHalfFollowupCameraOn(this.player);
     this.setMiniMap();
 
     this.createCatSpawns(map.getObjectLayer("cats"));
@@ -60,6 +62,7 @@ class GreenScene extends PhaserSceneTool {
     // enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
 
     // enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
+
   }
 
   onWeaponHit(entity, source) {
