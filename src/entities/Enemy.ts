@@ -1,6 +1,6 @@
 import collidable from "../mixins/collidable";
 
-import DamageNumberParticle from "../attacks/DamageNumberParticle";
+import DamageNumberParticle from "../effects/DamageNumberParticle";
 
 import anims from "../mixins/anims";
 
@@ -109,8 +109,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   takesHit(source) {
     this.hasBeenHit = true;
 
-    new DamageNumberParticle(this.scene, this.x, this.y, source.damage);
-    this.health -= source.damage;
+    const damageChoosed = Phaser.Math.Between(source.damageBetween[0], source.damageBetween[1]);
+    new DamageNumberParticle(this.scene, this.x, this.y, damageChoosed);
+    this.health -= damageChoosed;
 
     source.deliversHit(this);
     source.body.reset(-50, -50);

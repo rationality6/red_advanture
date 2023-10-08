@@ -6,7 +6,7 @@ import Projectiles from "../attacks/Projectiles";
 
 import MeleeCollides from "../attacks/MeleeCollides";
 
-import DashDust from "../attacks/DashDust";
+import DashDusts from "../groups/DashDusts";
 
 import anims from "../mixins/anims";
 
@@ -32,7 +32,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
   meleeCollides: any;
 
-  middleOfDashAnimation: boolean = false;
+  private projectiles: any;
+  private dashdusts: any;
 
   private constructor(scene: any, x: number, y: number, key: string) {
     super(scene, x, y, key);
@@ -61,6 +62,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     initLafullAnimations(this.scene.anims);
 
     this.projectiles = new Projectiles(this.scene);
+    this.dashdusts = new DashDusts(this.scene, this);
 
     this.scene.input.keyboard.on("keydown-Z", () => {
       // combo support code for user
@@ -181,17 +183,18 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (left.isDown) {
       this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
       this.setVelocityX(-this.moveSpeed);
-      this.setFlipX(true);
-      
+      this.setFlipX(true);  
     } else if (right.isDown) {
       this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
       this.setVelocityX(this.moveSpeed);
       this.setFlipX(false);
-      
     } else {
       this.setVelocityX(0);
     }
 
+    if(onFloorValue && this.body.velocity.x !== 0 != 0){
+      this.dashdusts.dash(this.lastDirection);
+    }
 
     this.jumpCheck(isSpaceJustDown, isUpJustDown, onFloorValue);
 

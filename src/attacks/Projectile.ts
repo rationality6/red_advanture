@@ -4,7 +4,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   private traveledDistance = 0;
   private cooldown = 2000;
 
-  damage: number = 85;
+  damageBetween: [number, number] = [60, 90]
   direction: string = "right";
 
   constructor(scene, x, y, key) {
@@ -26,6 +26,10 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     this.setSize(10, 10);
 
     this.play("fireball");
+  }
+
+  damegesBetween() {
+    return this.damageBetween;
   }
 
   preUpdate(time, delta) {
