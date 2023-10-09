@@ -41,6 +41,8 @@ class MeleeCollides extends Phaser.Physics.Arcade.Sprite {
       const selectedDamage = Phaser.Math.Between(40, 60)
 
       this.damage = selectedDamage
+
+      this.scene.cameras.main.shake(50, 0.01);
       
       const randomVelocityY = Math.random() * -200 - 230;
       const randomLeftOrRight = Math.random() > 0.5 ? 1 : -1;

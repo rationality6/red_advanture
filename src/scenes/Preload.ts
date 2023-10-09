@@ -107,6 +107,11 @@ class Preload extends PhaserSceneTool {
       frameHeight: 68,
     });
 
+    this.load.spritesheet("coin", "assets/effect/coin.png", {
+      frameWidth: 85,
+      frameHeight: 85,
+    });
+
     this.load.audio("missed", "assets/sounds/missed.mp3");
     this.load.audio("ruruSpecialLaser", "assets/sounds/ruru_special_laser.mp3");
     this.load.audio("lightSaber", "assets/sounds/light_saber.mp3");
@@ -188,8 +193,8 @@ class Preload extends PhaserSceneTool {
     const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
     await this.setDelay(logoExposeSetting);
     // this.scene.start("OpeningScene");
-    this.scene.start("GreenScene");
-    // this.scene.start("EndScene");
+    // this.scene.start("GreenScene");
+    this.scene.start("EndScene");
   }
 }
 

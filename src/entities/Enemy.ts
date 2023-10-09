@@ -2,6 +2,8 @@ import collidable from "../mixins/collidable";
 
 import DamageNumberParticle from "../effects/DamageNumberParticle";
 
+import Coin from "./Coin";
+
 import anims from "../mixins/anims";
 
 class Enemy extends Phaser.Physics.Arcade.Sprite {
@@ -115,6 +117,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     source.deliversHit(this);
     source.body.reset(-50, -50);
+
+    new Coin(this.scene, this.x, this.y, "coin");
 
     if (this.health <= 0) {
       this.setVelocity(0, -200);
