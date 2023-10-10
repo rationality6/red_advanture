@@ -4,9 +4,10 @@ import PhaserSceneTool from "./PhaserSceneTool";
 import Player from "../entities/player";
 import BirdMan from "../entities/BirdMan";
 import CatLaying from "../entities/CatLaying";
-import Cats from "../groups/Cats";
 
+import Cats from "../groups/Cats";
 import Enemies from "../groups/Enemies";
+import Coins from "../groups/Coins";
 
 import cameraMixin from "../mixins/cameraMixin";
 import minimapMixin from "../mixins/minimapMixin";
@@ -66,8 +67,16 @@ export default class EndScene extends PhaserSceneTool {
     enemiesGroup.addCollider(this.colliderLayer);
     enemiesGroup.addCollider(this.player, this.onPlayerCollision);
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
-
     enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
+
+    this.coins = new Coins(this);
+    this.coins.addCollider(this.colliderLayer);
+    this.coins.addCollider(this.player, this.getCoin);
+
+  }
+
+  getCoin(coin: any, player: any) {
+    console.log("coin get");
   }
 
   onWeaponHit(entity, source) {

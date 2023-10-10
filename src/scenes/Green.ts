@@ -7,6 +7,7 @@ import CatLaying from "../entities/CatLaying";
 
 import Enemies from "../groups/Enemies";
 import Cats from "../groups/Cats";
+import Coins from "../groups/Coins";
 
 import cameraMixin from "../mixins/cameraMixin";
 import minimapMixin from "../mixins/minimapMixin";
@@ -21,6 +22,7 @@ class GreenScene extends PhaserSceneTool {
   player: Player;
 
   background: Phaser.GameObjects.TileSprite;
+  coins: Coins;
 
   constructor(config) {
     super("GreenScene");
@@ -63,6 +65,7 @@ class GreenScene extends PhaserSceneTool {
 
     // enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
 
+    this.coins = new Coins(this);
   }
 
   onWeaponHit(entity, source) {

@@ -111,25 +111,34 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   takesHit(source) {
     this.hasBeenHit = true;
 
-    const damageChoosed = Phaser.Math.Between(source.damageBetween[0], source.damageBetween[1]);
+    const damageChoosed = Phaser.Math.Between(
+      source.damageBetween[0],
+      source.damageBetween[1]
+    );
     new DamageNumberParticle(this.scene, this.x, this.y, damageChoosed);
     this.health -= damageChoosed;
 
     source.deliversHit(this);
     source.body.reset(-50, -50);
 
-    new Coin(this.scene, this.x, this.y, "coin");
+    this.checkDeath();
 
+    this.scene.coins.createCoins(1)
+
+    setTimeout(() => {
+      this.hasBeenHit = false;
+    }, 1000);
+  }
+
+  checkDeath() {
     if (this.health <= 0) {
       this.setVelocity(0, -200);
       this.setTint(0xff0000);
       this.body.checkCollision.none = true;
       this.setCollideWorldBounds(false);
-    }
 
-    setTimeout(() => {
-      this.hasBeenHit = false
-    }, 1000)
+      this.scene.coins.createCoins(5)
+    }
   }
 }
 
