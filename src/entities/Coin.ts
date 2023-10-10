@@ -17,7 +17,7 @@ class Coin extends Phaser.Physics.Arcade.Sprite {
 
     const randomVelocityX = Phaser.Math.Between(-200, 200)
     this.setVelocityX(randomVelocityX);
-    this.setVelocityY(-200)
+    this.setVelocityY(-300)
     this.setGravityY(500);
 
     this.setCollideWorldBounds(true);

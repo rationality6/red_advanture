@@ -14,7 +14,6 @@ import minimapMixin from "../mixins/minimapMixin";
 
 import HitProjectile from "../attacks/HitProjectile";
 
-
 export default class EndScene extends PhaserSceneTool {
   private colliderLayer: any;
 
@@ -45,15 +44,15 @@ export default class EndScene extends PhaserSceneTool {
     const back = this.getPlayerZones(map).back;
 
     this.background = this.add
-    .tileSprite(0, 0,this.gameWidth ,this.gameHeight , "sky2")
-    .setDepth(-1)
-    .setOrigin(0,0)
+      .tileSprite(0, 0, this.gameWidth, this.gameHeight, "sky2")
+      .setDepth(-1)
+      .setOrigin(0, 0);
 
-    this.createEndOfLevel(this.player, back)
+    this.createEndOfLevel(this.player, back);
 
-    this.setupFollowupCameraOn(this.player)
+    this.setupFollowupCameraOn(this.player);
     this.setMiniMap();
-    
+
     const catGroup = new Cats(this);
     const cat1 = new CatLaying(this, 270, 365);
     catGroup.add(cat1);
@@ -62,7 +61,7 @@ export default class EndScene extends PhaserSceneTool {
     catGroup.addCollider(this.player, () => {
       this.sound.play("meow");
     });
-    
+
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
     enemiesGroup.addCollider(this.colliderLayer);
     enemiesGroup.addCollider(this.player, this.onPlayerCollision);
@@ -72,11 +71,11 @@ export default class EndScene extends PhaserSceneTool {
     this.coins = new Coins(this);
     this.coins.addCollider(this.colliderLayer);
     this.coins.addCollider(this.player, this.getCoin);
-
   }
 
   getCoin(coin: any, player: any) {
-    console.log("coin get");
+    this.scene.sound.play("coinGet", { volume: 1 });
+    coin.destroy();
   }
 
   onWeaponHit(entity, source) {
@@ -106,7 +105,6 @@ export default class EndScene extends PhaserSceneTool {
     });
   }
 
-
   createEnemySpawns(spawnLayer) {
     const enemies = new Enemies(this);
     const enemyTypes = enemies.getTypes();
@@ -124,7 +122,5 @@ export default class EndScene extends PhaserSceneTool {
 
     return enemies;
   }
-  update(time: number, delta: number): void {
-
-  }
+  update(time: number, delta: number): void {}
 }

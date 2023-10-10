@@ -113,6 +113,7 @@ class Preload extends PhaserSceneTool {
     });
 
     this.load.audio("missed", "assets/sounds/missed.mp3");
+    this.load.audio("coinGet", "assets/sounds/coin_get.mp3");
     this.load.audio("ruruSpecialLaser", "assets/sounds/ruru_special_laser.mp3");
     this.load.audio("lightSaber", "assets/sounds/light_saber.mp3");
     this.load.audio("bgSoundSuperShy", "assets/sounds/super_shy.mp3");

@@ -8,17 +8,17 @@ class Coins extends Phaser.GameObjects.Group {
     Object.assign(this, collidable);
   }
 
-  createCoins(coinTotal): void {
+  createCoins(coinTotal, target): void {
     [...Array(coinTotal)].forEach(() => {
-      this.add(this.createCoin());
+      this.add(this.createCoin(target));
     });
   }
 
-  createCoin(): Coin {
+  createCoin(target): Coin {
     return new Coin(
       this.scene,
-      this.scene.player.x,
-      this.scene.player.y,
+      target.x,
+      target.y,
       "coin"
     );
   }

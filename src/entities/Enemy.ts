@@ -123,7 +123,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.checkDeath();
 
-    this.scene.coins.createCoins(1)
+    this.scene.coins.createCoins(1, this);
 
     setTimeout(() => {
       this.hasBeenHit = false;
@@ -137,7 +137,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.body.checkCollision.none = true;
       this.setCollideWorldBounds(false);
 
-      this.scene.coins.createCoins(5)
+      this.scene.coins.createCoins(5, this);
     }
   }
 }
