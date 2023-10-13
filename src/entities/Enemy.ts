@@ -109,11 +109,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   takesHit(source) {
     this.hasBeenHit = true;
+    this.setBounce(0.7, 0.7)
 
     const damageChoosed = Phaser.Math.Between(
       source.damageBetween[0],
       source.damageBetween[1]
     );
+
     new DamageNumberParticle(this.scene, this.x, this.y, damageChoosed);
     this.health -= damageChoosed;
 
@@ -125,6 +127,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.scene.coins.createCoins(1, this);
 
     setTimeout(() => {
+      this.setBounce(0, 0)
       this.hasBeenHit = false;
     }, 1000);
   }

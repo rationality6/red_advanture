@@ -11,7 +11,6 @@ import GameGeneral from "./GameGeneral";
 
 class GreenScene extends GameGeneral {
   colliderLayer: any;
-  private bgStarted = false;
 
   background: Phaser.GameObjects.TileSprite;
 
@@ -27,15 +26,21 @@ class GreenScene extends GameGeneral {
   create() {
     super.create();
 
+    this.catGroup.createCat(370, 400);
+    this.catGroup.createCat(400, 400);
+    this.catGroup.createCat(430, 400);
+
     this.map = this.make.tilemap({ key: "map-green" });
     const tileset1 = this.map.addTilesetImage("green", "green-tile");
+
     this.colliderLayer = this.map.createLayer(
       "collidersLayer",
       tileset1!,
       0,
       0
     );
-    this.mapFieldLayer = this.map.createLayer("field", tileset1!, 0, -100);
+
+    this.mapFieldLayer = this.map.createLayer("field", tileset1!, 0, 0);
 
     const zones = this.getPlayerZones();
 

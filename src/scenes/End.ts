@@ -27,6 +27,7 @@ export default class EndScene extends GameGeneral {
   }
 
   create() {
+    super.create()
     const map = this.make.tilemap({ key: "map2" });
     // const tileset1 = map.addTilesetImage("tile_set", "tiles-1");
     const tileset2 = map.addTilesetImage("tile_set", "tiles-2");
@@ -38,7 +39,6 @@ export default class EndScene extends GameGeneral {
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
 
-    this.player = new Player(this, 100, 100, "player");
     this.player.addCollider(this.colliderLayer);
 
     const back = this.getPlayerZones(map).back;
@@ -69,15 +69,9 @@ export default class EndScene extends GameGeneral {
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
     enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
 
-    // this.coins = new Coins(this);
-    // this.coins.addCollider(this.colliderLayer);
-    // this.coins.addCollider(this.player, this.getCoin);
-  }
 
-  // getCoin(coin: any, player: any) {
-  //   this.scene.sound.play("coinGet", { volume: 1 });
-  //   coin.destroy();
-  // }
+    this.coins.addCollider(this.colliderLayer);
+  }
 
   onWeaponHit(entity, source) {
     new HitProjectile(this.scene, source.x, source.y);

@@ -1,6 +1,3 @@
-import initAnimations from "./anims/playerAnims";
-import initLafullAnimations from "./anims/lafullAnims";
-
 import collidable from "../mixins/collidable";
 import anims from "../mixins/anims";
 
@@ -39,9 +36,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
-
-    initAnimations(this.scene.anims);
-    initLafullAnimations(this.scene.anims);
 
     // mixins
     Object.assign(this, collidable);
@@ -182,7 +176,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     if (left.isDown) {
       this.lastDirection = Phaser.Physics.Arcade.FACING_LEFT;
       this.setVelocityX(-this.moveSpeed);
-      this.setFlipX(true);  
+      this.setFlipX(true);
     } else if (right.isDown) {
       this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
       this.setVelocityX(this.moveSpeed);
@@ -191,7 +185,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
     }
 
-    if(onFloorValue && this.body.velocity.x !== 0 != 0){
+    if (onFloorValue && (this.body.velocity.x !== 0) != 0) {
       this.dashdusts.dash(this.lastDirection);
     }
 

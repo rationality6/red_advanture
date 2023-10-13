@@ -48,6 +48,11 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
   }
 
   create() {
+    super.create();
+
+    this.catGroup.createCat(770, 400);
+    this.catGroup.createCat(800, 400);
+
     this.joyStick = this.plugins
       .get("rexvirtualjoystickplugin")
       .add(this, {
@@ -137,8 +142,6 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
       await this.setDelay(1000);
       this.clickLock = false;
     });
-
-    this.createPlayer(300, 500);
   }
 
   startGame() {

@@ -1,14 +1,14 @@
 import PhaserSceneTool from "./PhaserSceneTool";
 
-import Player from "../entities/Player";
-
 import Coins from "../groups/Coins";
 import Cats from "../groups/Cats";
 
-class GameGeneral extends PhaserSceneTool {
-  // entities
-  player: Player;
+import initAnimations from "../entities/anims/playerAnims";
+import initLafullAnimations from "../entities/anims/lafullAnims";
 
+import playerMixin from "../mixins/playerMixin";
+
+class GameGeneral extends PhaserSceneTool {
   // groups
   coins: Coins;
   catGroup: Cats;
@@ -18,13 +18,12 @@ class GameGeneral extends PhaserSceneTool {
   }
 
   create() {
+    Object.assign(this, playerMixin);
+    
+    this.setInitAnims()
     this.createPlayer(100, 400)
     this.createCoinsSpawns();
     this.createCatSpawns();
-  }
-
-  createPlayer(x, y) {
-    this.player = new Player(this, x, y, "lafull-idle");
   }
 
   createCoinsSpawns() {
@@ -34,15 +33,12 @@ class GameGeneral extends PhaserSceneTool {
   }
 
   getCoin(coin: any, player: any) {
-    this.scene.sound.play("coinGet", { volume: 1 });
+    this.scene.sound.play("coinGet", { volume: 0.5 });
     coin.destroy();
   }
 
   createCatSpawns() {
     this.catGroup = new Cats(this);
-
-    this.catGroup.createCat(270, 400);
-    this.catGroup.createCat(300, 400);
 
     this.catGroup.addCollider(this.player, (cat) => {
       this.sound.play("meow");
@@ -66,6 +62,11 @@ class GameGeneral extends PhaserSceneTool {
     this.physics.add.overlap(this.player, endOfSprite, () => {
       this.scene.start("GameScene");
     });
+  }
+
+  setInitAnims() {
+    initAnimations(this.anims);
+    initLafullAnimations(this.anims);
   }
 }
 

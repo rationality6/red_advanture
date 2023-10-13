@@ -1,10 +1,13 @@
 import collidable from "../mixins/collidable";
 
+import initAnims from "../entities/anims/catAnims";
 import CatLaying from "../entities/CatLaying";
 
 class Cats extends Phaser.GameObjects.Group {
   constructor(scene: Phaser.Scene) {
     super(scene);
+
+    initAnims(this.scene.anims);
 
     Object.assign(this, collidable);
   }

@@ -2,10 +2,8 @@ import Phaser from "phaser";
 
 import Player from "../entities/Player";
 import BirdMan from "../entities/BirdMan";
-import CatLaying from "../entities/CatLaying";
 
 import Enemies from "../groups/Enemies";
-import Cats from "../groups/Cats";
 
 import cameraMixin from "../mixins/cameraMixin";
 import minimapMixin from "../mixins/minimapMixin";
@@ -17,7 +15,6 @@ import GameGeneral from "./GameGeneral";
 class GameScene extends GameGeneral {
   colliderLayer: any;
   private bgStarted = false;
-  player: Player;
 
   background: Phaser.GameObjects.TileSprite;
 
@@ -41,6 +38,8 @@ class GameScene extends GameGeneral {
   }
 
   create() {
+    super.create()
+
     const spaceBar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -67,9 +66,12 @@ class GameScene extends GameGeneral {
     this.add.image(70, 296, "hee_tree").setOrigin(0, 0);
 
     const zones = this.getPlayerZones(this.map);
+
+    this.player.x = zones.start.x;
+    this.player.y = zones.start.y;
+
     const enemySpawns = this.map.getObjectLayer("enemys");
 
-    this.player = new Player(this, zones.start.x, zones.start.y, "lafull-idle");
     this.createEndOfLevel(this.player, zones.end);
 
     this.colliderLayer.setCollisionByProperty({ collides: true });
@@ -78,22 +80,12 @@ class GameScene extends GameGeneral {
 
     this.setupFollowupCameraOn(this.player);
     this.setMiniMap();
-    
-    this.anims.create({
-      key: "catLaying",
-      frames: this.anims.generateFrameNumbers("catLaying", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.createCatSpawns(this.map.getObjectLayer("cats"));
 
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
     enemiesGroup.addCollider(this.colliderLayer);
+    
     enemiesGroup.addCollider(this.player, this.onPlayerCollision);
+
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
 
     enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
@@ -124,17 +116,6 @@ class GameScene extends GameGeneral {
         }
       });
     }
-  }
-
-  createCatSpawns(catSpawns) {
-    const catGroup = new Cats(this);
-    const cat1 = new CatLaying(this, 270, 365);
-    catGroup.add(cat1);
-    const cat2 = new CatLaying(this, 50, 90);
-    catGroup.add(cat2);
-    catGroup.addCollider(this.player, () => {
-      this.sound.play("meow");
-    });
   }
 
   createEnemySpawns(spawnLayer) {

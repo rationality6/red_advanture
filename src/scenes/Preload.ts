@@ -202,6 +202,7 @@ class Preload extends PhaserSceneTool {
     await this.setDelay(logoExposeSetting);
     this.scene.start("OpeningScene");
     // this.scene.start("GreenScene");
+    // this.scene.start("GameScene");
     // this.scene.start("EndScene");
   }
 }
