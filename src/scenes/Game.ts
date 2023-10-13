@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import PhaserSceneTool from "./PhaserSceneTool";
 
 import Player from "../entities/Player";
 import BirdMan from "../entities/BirdMan";
@@ -13,7 +12,9 @@ import minimapMixin from "../mixins/minimapMixin";
 
 import HitProjectile from "../attacks/HitProjectile";
 
-class GameScene extends PhaserSceneTool {
+import GameGeneral from "./GameGeneral";
+
+class GameScene extends GameGeneral {
   colliderLayer: any;
   private bgStarted = false;
   player: Player;
@@ -22,7 +23,9 @@ class GameScene extends PhaserSceneTool {
 
   constructor(config) {
     super("GameScene");
+
     this.config = config;
+
     Object.assign(this, cameraMixin);
     Object.assign(this, minimapMixin);
   }
@@ -45,15 +48,15 @@ class GameScene extends PhaserSceneTool {
       this.playSong();
     });
 
-    const map = this.make.tilemap({ key: "map" });
-    const tileset1 = map.addTilesetImage("main_lev_build_1", "tiles-1");
-    const tileset2 = map.addTilesetImage("hee_tree", "hee_tree");
+    this.map = this.make.tilemap({ key: "map" });
+    const tileset1 = this.map.addTilesetImage("main_lev_build_1", "tiles-1");
+    const tileset2 = this.map.addTilesetImage("hee_tree", "hee_tree");
 
-    this.colliderLayer = map.createLayer("collidersLayer", tileset1!, 0, 0);
-    map.createLayer("moss", tileset1!, 0, 0);
-    const mapFieldLayer = map.createLayer("field", tileset1!, 0, 0);
-    map.createLayer("trees", tileset1!, 0, 0);
-    map.createLayer("leafs", tileset1!, 0, 0);
+    this.colliderLayer = this.map.createLayer("collidersLayer", tileset1!, 0, 0);
+    this.map.createLayer("moss", tileset1!, 0, 0);
+    const mapFieldLayer = this.map.createLayer("field", tileset1!, 0, 0);
+    this.map.createLayer("trees", tileset1!, 0, 0);
+    this.map.createLayer("leafs", tileset1!, 0, 0);
 
     this.background = this.add
       .tileSprite(0, 0, this.gameHeight, this.gameWidth - 10, "sky")
@@ -63,8 +66,8 @@ class GameScene extends PhaserSceneTool {
     this.add.image(150, 298, "hee_tree").setOrigin(0, 0);
     this.add.image(70, 296, "hee_tree").setOrigin(0, 0);
 
-    const zones = this.getPlayerZones(map);
-    const enemySpawns = map.getObjectLayer("enemys");
+    const zones = this.getPlayerZones(this.map);
+    const enemySpawns = this.map.getObjectLayer("enemys");
 
     this.player = new Player(this, zones.start.x, zones.start.y, "lafull-idle");
     this.createEndOfLevel(this.player, zones.end);
@@ -86,7 +89,7 @@ class GameScene extends PhaserSceneTool {
       repeat: -1,
     });
 
-    this.createCatSpawns(map.getObjectLayer("cats"));
+    this.createCatSpawns(this.map.getObjectLayer("cats"));
 
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
     enemiesGroup.addCollider(this.colliderLayer);

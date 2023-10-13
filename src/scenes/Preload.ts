@@ -34,6 +34,11 @@ class Preload extends PhaserSceneTool {
     this.load.image("sky", "assets/ms3-sky.png");
     this.load.image("sky2", "assets/bg_map2.png");
 
+    this.preloadSpritesheets();
+    this.preloadAudio();
+  }
+
+  preloadSpritesheets() {
     this.load.spritesheet("fireball", "assets/player/fire_ball.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -111,7 +116,9 @@ class Preload extends PhaserSceneTool {
       frameWidth: 85,
       frameHeight: 85,
     });
+  }
 
+  preloadAudio() {
     this.load.audio("missed", "assets/sounds/missed.mp3");
     this.load.audio("coinGet", "assets/sounds/coin_get.mp3");
     this.load.audio("ruruSpecialLaser", "assets/sounds/ruru_special_laser.mp3");
@@ -193,9 +200,9 @@ class Preload extends PhaserSceneTool {
 
     const logoExposeSetting: Number = this.isLocal ? 300 : 3000;
     await this.setDelay(logoExposeSetting);
-    // this.scene.start("OpeningScene");
+    this.scene.start("OpeningScene");
     // this.scene.start("GreenScene");
-    this.scene.start("EndScene");
+    // this.scene.start("EndScene");
   }
 }
 

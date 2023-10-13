@@ -9,6 +9,18 @@ class Snaky extends Enemy {
     this.speed = 10;
 
     initAnims(this.scene.anims);
+
+    this.setSize(18, 55);
+    this.setScale(1.1);
+
+    this.init()
+  }
+
+  init() {
+    super.init();
+
+    this.setSize(this.width - 20, 45);
+    this.setOffset(10, 15);
   }
 
   update(time, delta) {

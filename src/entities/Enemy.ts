@@ -13,6 +13,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   private platformCollidersLayer;
   private timeFromLastTurn: number;
 
+  lastDirection: number = Phaser.Physics.Arcade.FACING_RIGHT;
+
   hasBeenHit: boolean = false;
 
   private player!: Phaser.Physics.Arcade.Sprite;
@@ -48,9 +50,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.body.setGravityY(this.gravity);
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
-
-    this.setSize(10, 35);
-    this.setOffset(11, 30);
     this.setVelocityX(this.speed);
 
     this.frontRayGraphics = this.scene.add.graphics({

@@ -1,14 +1,13 @@
 import initAnimations from "./anims/playerAnims";
 import initLafullAnimations from "./anims/lafullAnims";
+
 import collidable from "../mixins/collidable";
+import anims from "../mixins/anims";
 
 import Projectiles from "../attacks/Projectiles";
-
 import MeleeCollides from "../attacks/MeleeCollides";
 
 import DashDusts from "../groups/DashDusts";
-
-import anims from "../mixins/anims";
 
 class Player extends Phaser.Physics.Arcade.Sprite {
   private cursors: any;
@@ -41,6 +40,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
+    initAnimations(this.scene.anims);
+    initLafullAnimations(this.scene.anims);
+
     // mixins
     Object.assign(this, collidable);
     Object.assign(this, anims);
@@ -57,9 +59,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
 
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-
-    initAnimations(this.scene.anims);
-    initLafullAnimations(this.scene.anims);
 
     this.projectiles = new Projectiles(this.scene);
     this.dashdusts = new DashDusts(this.scene, this);

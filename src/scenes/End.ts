@@ -1,6 +1,3 @@
-import Phaser from "phaser";
-import PhaserSceneTool from "./PhaserSceneTool";
-
 import Player from "../entities/player";
 import BirdMan from "../entities/BirdMan";
 import CatLaying from "../entities/CatLaying";
@@ -14,8 +11,11 @@ import minimapMixin from "../mixins/minimapMixin";
 
 import HitProjectile from "../attacks/HitProjectile";
 
-export default class EndScene extends PhaserSceneTool {
+import GameGeneral from "./GameGeneral";
+
+export default class EndScene extends GameGeneral {
   private colliderLayer: any;
+  coins: Coins;
 
   constructor(config) {
     super("EndScene");
@@ -58,8 +58,9 @@ export default class EndScene extends PhaserSceneTool {
     catGroup.add(cat1);
     const cat2 = new CatLaying(this, 50, 90);
     catGroup.add(cat2);
-    catGroup.addCollider(this.player, () => {
+    catGroup.addCollider(this.player, (cat) => {
       this.sound.play("meow");
+      this.coins.createCoins(10, cat);
     });
 
     const enemiesGroup = this.createEnemySpawns(enemySpawns);
@@ -68,15 +69,15 @@ export default class EndScene extends PhaserSceneTool {
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
     enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
 
-    this.coins = new Coins(this);
-    this.coins.addCollider(this.colliderLayer);
-    this.coins.addCollider(this.player, this.getCoin);
+    // this.coins = new Coins(this);
+    // this.coins.addCollider(this.colliderLayer);
+    // this.coins.addCollider(this.player, this.getCoin);
   }
 
-  getCoin(coin: any, player: any) {
-    this.scene.sound.play("coinGet", { volume: 1 });
-    coin.destroy();
-  }
+  // getCoin(coin: any, player: any) {
+  //   this.scene.sound.play("coinGet", { volume: 1 });
+  //   coin.destroy();
+  // }
 
   onWeaponHit(entity, source) {
     new HitProjectile(this.scene, source.x, source.y);

@@ -1,9 +1,6 @@
-import Player from "../entities/Player";
-import PhaserSceneTool from "./PhaserSceneTool";
+import GameGeneral from "./GameGeneral";
 
-import VirtualJoystick from "phaser3-rex-plugins/plugins/virtualjoystick.js";
-
-class OpeningScene extends PhaserSceneTool {
+class OpeningScene extends GameGeneral {
   textIndex: number = 0;
   text: string[] = [
     "피와 눈물이 섞인 땅 위에 남긴 상처를 지우려면,",
@@ -16,21 +13,16 @@ class OpeningScene extends PhaserSceneTool {
     "클릭하면 다음으로 넘어갑니다.",
   ];
 
-  player: Player;
-
   joyStickInfoText: string;
   keyDownState: string;
 
   clickLock: boolean = false;
   mainText: Phaser.GameObjects.Text;
   bgmStarted: boolean = false;
+
   constructor() {
     super("OpeningScene");
-
-    this.init();
   }
-
-  init() {}
 
   joyStickState() {
     var cursorKeys = this.joyStick.createCursorKeys();
@@ -41,8 +33,6 @@ class OpeningScene extends PhaserSceneTool {
         this.keyDownState = name;
       }
     }
-
-    console.log(this.keyDownState);
 
     s += `
 Force: ${Math.floor(this.joyStick.force * 100) / 100}
@@ -87,7 +77,6 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
       .setOrigin(0.5, 0.5);
 
     // "Click to start game"
-
     this.skipText = this.add
       .text(this.gameWidth, this.gameHeight, "Skip", {
         fontFamily: "Nanum Gothic",
@@ -149,7 +138,7 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
       this.clickLock = false;
     });
 
-    this.player = new Player(this, 300, 500).setScale(1);
+    this.createPlayer(300, 500);
   }
 
   startGame() {
@@ -164,13 +153,13 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
       this.startGame();
     }
 
-    if(this.keyDownState == "left"){
+    if (this.keyDownState == "left") {
       this.player.moveLeft();
     }
-    if(this.keyDownState == "right"){
+    if (this.keyDownState == "right") {
       this.player.moveRight();
     }
-    if(this.keyDownState == "up"){
+    if (this.keyDownState == "up") {
       this.player.moveUp();
     }
   }
