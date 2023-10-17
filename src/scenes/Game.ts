@@ -89,6 +89,8 @@ class GameScene extends GameGeneral {
     enemiesGroup.addCollider(this.player.projectiles, this.onWeaponHit);
 
     enemiesGroup.addOverlap(this.player.meleeCollides, this.onWeaponHit);
+
+    this.drawCoin();
   }
 
   onWeaponHit(entity, source) {
@@ -157,6 +159,7 @@ class GameScene extends GameGeneral {
   update(time: number, delta: number): void {
     super.update()
     this.background.tilePositionX -= 0.1;
+    this.updateCoinText();
   }
 }
 

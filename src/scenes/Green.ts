@@ -23,6 +23,10 @@ class GreenScene extends GameGeneral {
     Object.assign(this, minimapMixin);
   }
 
+  init(data){
+
+  }
+
   create() {
     super.create();
 

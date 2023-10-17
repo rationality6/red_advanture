@@ -146,7 +146,7 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
 
   startGame() {
     this.sound.stopAll();
-    this.scene.start("GreenScene");
+    this.scene.start("GreenScene", { foo: "bar" });
   }
 
   update() {
