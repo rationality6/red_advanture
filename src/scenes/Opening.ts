@@ -53,19 +53,19 @@ Angle: ${Math.floor(this.joyStick.angle * 100) / 100}
     this.catGroup.createCat(770, 400);
     this.catGroup.createCat(800, 400);
 
-    this.joyStick = this.plugins
-      .get("rexvirtualjoystickplugin")
-      .add(this, {
-        x: 200,
-        y: 400,
-        radius: 100,
-        base: this.add.circle(0, 0, 100, 0x888888),
-        thumb: this.add.circle(0, 0, 50, 0xcccccc),
-        // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
-        // forceMin: 16,
-        // enable: true
-      })
-      .on("update", this.joyStickState, this);
+    // this.joyStick = this.plugins
+    //   .get("rexvirtualjoystickplugin")
+    //   .add(this, {
+    //     x: 200,
+    //     y: 400,
+    //     radius: 100,
+    //     base: this.add.circle(0, 0, 100, 0x888888),
+    //     thumb: this.add.circle(0, 0, 50, 0xcccccc),
+    //     // dir: '8dir',   // 'up&down'|0|'left&right'|1|'4dir'|2|'8dir'|3
+    //     // forceMin: 16,
+    //     // enable: true
+    //   })
+    //   .on("update", this.joyStickState, this);
 
     this.joyStickInfoText = this.add.text(0, 0, "");
 

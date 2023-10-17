@@ -155,6 +155,7 @@ class GameScene extends GameGeneral {
   }
 
   update(time: number, delta: number): void {
+    super.update()
     this.background.tilePositionX -= 0.1;
   }
 }

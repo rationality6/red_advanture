@@ -15,6 +15,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   private comboTimeoutId: any;
   private comboCount: number = 0;
 
+  coinGet: number = 0
+
   private middleOfAttackTimeOutId: any;
 
   private lastDirection: Phaser.Physics.Arcade.Facing =

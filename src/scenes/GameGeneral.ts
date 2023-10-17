@@ -24,6 +24,7 @@ class GameGeneral extends PhaserSceneTool {
     this.createPlayer(100, 400)
     this.createCoinsSpawns();
     this.createCatSpawns();
+    this.drawCoin()
   }
 
   createCoinsSpawns() {
@@ -34,7 +35,16 @@ class GameGeneral extends PhaserSceneTool {
 
   getCoin(coin: any, player: any) {
     this.scene.sound.play("coinGet", { volume: 0.5 });
+    player.coinGet += 1
     coin.destroy();
+    console.log(player.coinGet)
+  }
+
+  drawCoin(){
+    this.scoreText = this.add.text(16, 16, `Coin: ${this.player.coinGet}`, {
+      fontSize: "32px",
+      fill: "#fff",
+    });
   }
 
   createCatSpawns() {
@@ -67,6 +77,10 @@ class GameGeneral extends PhaserSceneTool {
   setInitAnims() {
     initAnimations(this.anims);
     initLafullAnimations(this.anims);
+  }
+
+  update(){
+    this.scoreText.x = this.player.body.position.x;  
   }
 }
 
